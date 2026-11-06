@@ -47,6 +47,7 @@ type Layer = (typeof LAYERS)[number];
 export type PdfMeta = {
   titulo: string;
   modeloNome: string;
+  validado?: boolean;
   spec: Spec;
   motorVersao: string;
   data: Date;
@@ -228,7 +229,13 @@ function drawStamp(page: PDFPage, font: PDFFont, bold: PDFFont, meta: PdfMeta, d
   page.drawRectangle({ x, y: PDF_MARGIN * PT, width: w, height: 24 * PT, borderColor: rgb(0, 0, 0), borderWidth: 0.5 });
   const line = (txt: string, row: number, b = false, size = 7.5) =>
     page.drawText(txt, { x: x + 3 * PT, y: top - (4 + row * 4) * PT, size, font: b ? bold : font, maxWidth: w - 6 * PT });
-  line(`${meta.modeloNome} — ${f1(s.largura)} × ${f1(s.altura)} × ${f1(s.profundidade)} mm (medidas internas)`, 0, true, 8.5);
+  line(
+    `${meta.modeloNome} — ${f1(s.largura)} × ${f1(s.altura)} × ${f1(s.profundidade)} mm (medidas internas)` +
+      (meta.validado ? "" : "  ·  MODELO EM VALIDAÇÃO: confira o protótipo"),
+    0,
+    true,
+    8.5,
+  );
   line(
     `Espessura ${s.espessura.toLocaleString("pt-BR", { maximumFractionDigits: 3 })} mm · faca aberta ${f1(dl.bbox.w)} × ${f1(dl.bbox.h)} mm · folha ${paper}` +
       (meta.os ? ` · O.S. ${meta.os}` : "") +

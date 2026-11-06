@@ -46,6 +46,19 @@ test.describe("F02 — exportar", () => {
     await expect(page.getByText("Arquivos gerados", { exact: true })).toBeVisible();
   });
 
+  test("F02-E4 [B-004] notificação não cobre os botões de zoom", async ({ page }) => {
+    await abrirEditor(page, ["70", "150", "40"]);
+    await exportar(page).click();
+    const toast = page.getByText("Arquivos gerados", { exact: true }).locator("xpath=ancestor::li[1]");
+    await expect(toast).toBeVisible();
+    const a = (await toast.boundingBox())!;
+    for (const nome of ["Aumentar zoom", "Diminuir zoom", "Ajustar à tela"]) {
+      const b = (await page.getByRole("button", { name: nome }).boundingBox())!;
+      const sobrepoe = a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+      expect(sobrepoe, `toast cobre "${nome}"`).toBe(false);
+    }
+  });
+
   test("F02-E2 medida decimal no nome do arquivo", async ({ page }) => {
     await abrirEditor(page, ["70,5", "150", "40"]);
     const dl = page.waitForEvent("download");

@@ -113,9 +113,24 @@ test.describe("F01 — criar e ver a faca", () => {
     await expect(page.getByText(/Espessura máxima 3 mm/)).toBeVisible();
   });
 
-  test("F01-E10 recarregar sem salvar volta vazio (sem rascunho)", async ({ page }) => {
+  test("F01-E10 [B-005] recarregar sem salvar restaura o rascunho; Limpar zera", async ({ page }) => {
     await abrirEditor(page, ["70", "150", "40"]);
     await page.reload();
+    await expect(page.getByLabel(/^Largura/)).toHaveValue("70");
+    await expect(page.getByLabel(/^Altura/)).toHaveValue("150");
+    await expect(page.getByLabel(/^Profundidade/)).toHaveValue("40");
+    await expect(page.getByText("Rascunho restaurado")).toBeVisible();
+    await page.getByRole("button", { name: "Limpar rascunho" }).click();
+    await expect(page.getByLabel(/^Largura/)).toHaveValue("");
+    await page.reload();
+    await expect(page.getByLabel(/^Largura/)).toHaveValue("");
+  });
+
+  test("F01-E11 [B-005] faca salva não vira rascunho de faca nova", async ({ page }) => {
+    await page.goto("/criar/fundo-cartucho?d=d-1");
+    await expect(page.getByRole("heading", { name: "Caixa vela 200 ml" })).toBeVisible();
+    await page.goto("/criar/fundo-cartucho");
+    await expect(page.getByRole("combobox", { name: "Material" })).toBeVisible();
     await expect(page.getByLabel(/^Largura/)).toHaveValue("");
   });
 

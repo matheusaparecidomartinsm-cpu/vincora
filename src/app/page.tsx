@@ -49,6 +49,7 @@ export default function CatalogoPage() {
                   nome={m.nome}
                   categoria={CATEGORIAS[m.categoria]}
                   descricao={MODELS[m.slug]?.meta.descricao}
+                  emValidacao={!MODELS[m.slug]?.meta.validado}
                   preview={r?.ok ? r.dieline : null}
                 />
               );

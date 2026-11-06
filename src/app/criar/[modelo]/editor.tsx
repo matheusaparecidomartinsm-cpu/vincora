@@ -3,9 +3,10 @@ import { ArrowLeft, Download, Save } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Box3D } from "@/components/dieline/box-3d";
 import { DielineViewer } from "@/components/dieline/dieline-viewer";
 import { Button } from "@/components/ui/button";
-import { Select, Switch } from "@/components/ui/controls";
+import { Select, Switch, ViewTabs } from "@/components/ui/controls";
 import { Alert, Badge, RuleNotice } from "@/components/ui/feedback";
 import { SpecSummary } from "@/components/ui/layout-parts";
 import { MeasureField, formatMm } from "@/components/ui/measure-field";
@@ -18,6 +19,25 @@ import { smallestPaper } from "@/lib/dieline/paper";
 import type { Dieline, Spec } from "@/lib/dieline/types";
 
 const MANUAL = "__manual";
+
+type Rascunho = { L: number | null; A: number | null; P: number | null; materialId: string; espessura: number | null; sangria: boolean; cola: boolean };
+const chaveRascunho = (slug: string) => `gerador-facas:rascunho:${slug}`;
+function lerRascunho(slug: string): Rascunho | null {
+  try {
+    const raw = localStorage.getItem(chaveRascunho(slug));
+    return raw ? (JSON.parse(raw) as Rascunho) : null;
+  } catch {
+    return null;
+  }
+}
+function gravarRascunho(slug: string, r: Rascunho | null) {
+  try {
+    if (r) localStorage.setItem(chaveRascunho(slug), JSON.stringify(r));
+    else localStorage.removeItem(chaveRascunho(slug));
+  } catch {
+    /* navegador sem storage: segue sem rascunho */
+  }
+}
 
 export function Editor({ slug }: { slug: string }) {
   const { meta } = MODELS[slug];
@@ -38,6 +58,28 @@ export function Editor({ slug }: { slug: string }) {
   const [loadState, setLoadState] = useState<"idle" | "loading" | "notfound" | "error">(savedId ? "loading" : "idle");
   const [exporting, setExporting] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
+  // rascunho (só para faca nova): restaura ao abrir, grava a cada mudança
+  const [rascunhoPronto, setRascunhoPronto] = useState(false);
+  const [restaurado, setRestaurado] = useState(false);
+  const rascunhoTemMaterial = useRef(false);
+  useEffect(() => {
+    if (savedId) return;
+    const r = lerRascunho(meta.slug);
+    if (r && (r.L != null || r.A != null || r.P != null)) {
+      setL(r.L);
+      setA(r.A);
+      setP(r.P);
+      setSangria(r.sangria);
+      setCola(r.cola);
+      if (r.materialId) {
+        setMaterialId(r.materialId);
+        setEspessura(r.espessura);
+        rascunhoTemMaterial.current = true;
+      }
+      setRestaurado(true);
+    }
+    setRascunhoPronto(true);
+  }, [savedId, meta.slug]);
 
   // materiais
   useEffect(() => {
@@ -47,7 +89,7 @@ export function Editor({ slug }: { slug: string }) {
       .then((ms) => {
         if (!alive) return;
         setMaterials(ms);
-        if (!savedId) {
+        if (!savedId && !rascunhoTemMaterial.current) {
           const padrao = ms.find((m) => Math.abs(m.espessuraMm - 0.345) < 1e-6) ?? ms[0];
           if (padrao) {
             setMaterialId(padrao.id);
@@ -91,6 +133,20 @@ export function Editor({ slug }: { slug: string }) {
     };
   }, [savedId, meta.slug]);
 
+  useEffect(() => {
+    if (!rascunhoPronto || savedId || record) return;
+    const vazioAgora = L == null && A == null && P == null;
+    gravarRascunho(meta.slug, vazioAgora ? null : { L, A, P, materialId, espessura, sangria, cola });
+  }, [rascunhoPronto, savedId, record, meta.slug, L, A, P, materialId, espessura, sangria, cola]);
+
+  function limparRascunho() {
+    gravarRascunho(meta.slug, null);
+    setL(null);
+    setA(null);
+    setP(null);
+    setRestaurado(false);
+  }
+
   const input = useMemo(
     () => ({
       model: meta.slug,
@@ -106,7 +162,11 @@ export function Editor({ slug }: { slug: string }) {
   const vazio = L == null && A == null && P == null;
   const result = useMemo(() => (vazio ? null : build(input as Partial<Spec> & { model: string })), [input, vazio]);
   const lastValid = useRef<Dieline | null>(null);
-  if (result?.ok) lastValid.current = result.dieline;
+  const lastValidSpec = useRef<Spec | null>(null);
+  if (result?.ok) {
+    lastValid.current = result.dieline;
+    lastValidSpec.current = result.spec;
+  }
   const dieline = result?.ok ? result.dieline : vazio ? null : lastValid.current;
   const errors = result && !result.ok ? result.errors : {};
   const paper = result?.ok ? smallestPaper(result.dieline.bbox.w, result.dieline.bbox.h) : null;
@@ -180,6 +240,8 @@ export function Editor({ slug }: { slug: string }) {
       cliente: v.cliente.trim() || null,
     });
     setRecord(rec);
+    gravarRascunho(meta.slug, null);
+    setRestaurado(false);
     setSaveOpen(false);
     toast({ tone: "success", title: record ? "Faca atualizada" : "Faca salva", description: rec.nome });
     if (!savedId) router.replace(`/criar/${meta.slug}?d=${rec.id}`, { scroll: false });
@@ -227,6 +289,11 @@ export function Editor({ slug }: { slug: string }) {
         </div>
 
         <RuleNotice>{meta.regra}</RuleNotice>
+        {!meta.validado && (
+          <RuleNotice tone="warning">
+            Modelo em validação: ainda não foi aprovado em protótipo na fábrica. Monte uma amostra antes de mandar para a faca de aço.
+          </RuleNotice>
+        )}
 
         <fieldset className="flex flex-col gap-2">
           <legend className="sr-only">Medidas internas em milímetros</legend>
@@ -252,6 +319,14 @@ export function Editor({ slug }: { slug: string }) {
             />
           </div>
           <p className="text-xs text-text-muted">Dica: cole “70x150x40” no primeiro campo. Setas ↑↓ mudam 1 mm (Shift 10, Alt 0,1).</p>
+          {restaurado && !record && (
+            <p className="flex items-center justify-between gap-2 rounded-md bg-surface-sunken px-3 py-2 text-xs text-text-muted" role="status">
+              Rascunho restaurado
+              <Button variant="ghost" size="sm" onClick={limparRascunho}>
+                Limpar rascunho
+              </Button>
+            </p>
+          )}
         </fieldset>
 
         {ruleErr && <RuleNotice tone="danger">{ruleErr}</RuleNotice>}
@@ -301,12 +376,28 @@ export function Editor({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <section aria-label="Visualização da faca" className="h-[60vh] min-h-viewer-min-h lg:h-[calc(100vh-var(--l-header-h)-var(--l-gutter))]">
-        <DielineViewer
-          dieline={dieline}
-          label={`Faca da ${meta.nome.toLowerCase()}`}
-          invalid={!!result && !result.ok}
-          emptyText="Digite largura, altura e profundidade para ver a faca."
+      <section aria-label="Visualização" className="h-[70vh] min-h-viewer-min-h lg:h-[calc(100vh-var(--l-header-h)-var(--l-gutter))]">
+        <ViewTabs
+          fill
+          tabs={[
+            {
+              value: "2d",
+              label: "Faca 2D",
+              content: (
+                <DielineViewer
+                  dieline={dieline}
+                  label={`Faca da ${meta.nome.toLowerCase()}`}
+                  invalid={!!result && !result.ok}
+                  emptyText="Digite largura, altura e profundidade para ver a faca."
+                />
+              ),
+            },
+            {
+              value: "3d",
+              label: "Caixa 3D",
+              content: <Box3D spec={vazio ? null : lastValidSpec.current} label={meta.nome} />,
+            },
+          ]}
         />
       </section>
 

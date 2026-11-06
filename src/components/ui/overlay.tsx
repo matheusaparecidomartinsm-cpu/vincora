@@ -44,7 +44,7 @@ export function Dialog({
 
 export const ToastProvider = RToast.Provider;
 export const ToastViewport = () => (
-  <RToast.Viewport className="fixed bottom-4 right-4 z-50 flex w-toast-w max-w-[calc(100vw-var(--l-gutter))] flex-col gap-2" />
+  <RToast.Viewport className="fixed right-4 top-[calc(var(--l-header-h)+var(--spacing)*4)] z-50 flex w-toast-w max-w-[calc(100vw-var(--l-gutter))] flex-col gap-2" />
 );
 
 export function Toast({

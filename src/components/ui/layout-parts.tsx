@@ -56,8 +56,10 @@ export function ModelCard({
   preview,
   enabled = true,
   descricao,
+  emValidacao,
 }: {
   descricao?: string;
+  emValidacao?: boolean;
   slug: string;
   nome: string;
   categoria: string;
@@ -82,6 +84,7 @@ export function ModelCard({
           {descricao && <p className="mt-2 text-sm text-text-muted">{descricao}</p>}
         </div>
         {!enabled && <Badge tone="neutral">Em breve</Badge>}
+        {enabled && emValidacao && <Badge tone="warning">Em validação</Badge>}
       </div>
     </>
   );

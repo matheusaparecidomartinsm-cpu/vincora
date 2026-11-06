@@ -13,8 +13,9 @@ export function fileBase(spec: Spec) {
 /** Gera PDF, SVG e DXF e empacota num .zip. */
 export async function buildZip(spec: Spec, dl: Dieline, extra: { os?: string; cliente?: string } = {}) {
   const base = fileBase(spec);
-  const nome = MODELS[spec.model]?.meta.nome ?? spec.model;
-  const pdf = await toPDF(dl, { titulo: base, modeloNome: nome, spec, motorVersao: MOTOR_VERSAO, data: new Date(), ...extra });
+  const meta = MODELS[spec.model]?.meta;
+  const nome = meta?.nome ?? spec.model;
+  const pdf = await toPDF(dl, { titulo: base, modeloNome: nome, validado: meta?.validado ?? false, spec, motorVersao: MOTOR_VERSAO, data: new Date(), ...extra });
   const svg = toSVG(dl, { cotas: true, titulo: base });
   const dxf = toDXF(dl);
   const leia = [

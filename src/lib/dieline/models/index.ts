@@ -14,6 +14,8 @@ export type ModelMeta = {
   usaCola: boolean;
   /** motor implementado neste código (independe de liberado em produção) */
   implementado: boolean;
+  /** true só depois de protótipo físico aprovado na fábrica */
+  validado: boolean;
 };
 
 const medida = (nome: string, min: number, max: number, maxMsg?: string) =>
@@ -43,6 +45,7 @@ export const MODELS: Record<string, ModelDef> = {
       descricao: "Fecha com lingueta em cima e embaixo. Boa para produtos leves: cosméticos, sachês, velas.",
       usaCola: true,
       implementado: true,
+      validado: false,
     },
     schema: base
       .extend({
