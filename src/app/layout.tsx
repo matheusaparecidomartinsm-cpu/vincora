@@ -7,8 +7,8 @@ import { AppHeader } from "@/components/ui/layout-parts";
 import { ToastHost } from "@/components/ui/toast-host";
 
 export const metadata: Metadata = {
-  title: { default: "Gerador de Facas", template: "%s · Gerador de Facas" },
-  description: "Facas paramétricas de embalagem — ferramenta interna",
+  title: { default: "Vincora — facas de embalagem", template: "%s · Vincora" },
+  description: "Faca de corte e vinco na medida, pronta para a produção. Ferramenta interna ProFood.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

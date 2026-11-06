@@ -388,7 +388,7 @@ export function Editor({ slug }: { slug: string }) {
                   dieline={dieline}
                   label={`Faca da ${meta.nome.toLowerCase()}`}
                   invalid={!!result && !result.ok}
-                  emptyText="Digite largura, altura e profundidade para ver a faca."
+                  emptyText="Digite largura, altura e profundidade. A faca aparece aqui na hora."
                 />
               ),
             },

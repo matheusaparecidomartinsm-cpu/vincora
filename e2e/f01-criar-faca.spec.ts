@@ -33,7 +33,7 @@ test.describe("F01 — criar e ver a faca", () => {
 
   test("F01-E1 sem medidas: instrução, sem erro, exportar desabilitado", async ({ page }) => {
     await abrirEditor(page);
-    await expect(page.getByText("Digite largura, altura e profundidade para ver a faca.")).toBeVisible();
+    await expect(page.getByText("Digite largura, altura e profundidade. A faca aparece aqui na hora.")).toBeVisible();
     await expect(page.getByText("Fora da regra")).toHaveCount(0);
     await expect(exportar(page)).toBeDisabled();
     await expectAccessible(page, "S06 vazio");

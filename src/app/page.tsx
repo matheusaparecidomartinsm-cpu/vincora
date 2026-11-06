@@ -27,8 +27,8 @@ export default function CatalogoPage() {
 
   return (
     <Page
-      title="Escolha o modelo"
-      description="Digite as medidas internas, confira a faca na tela e exporte PDF, SVG e DXF em tamanho real."
+      title="Que caixa vamos riscar hoje?"
+      description="Escolha o modelo, digite as medidas internas e leve para a produção o PDF, o SVG e o DXF em tamanho real."
     >
       <CategoryChips label="Filtrar por categoria" items={cats} active={cat} onChange={setCat} />
 
