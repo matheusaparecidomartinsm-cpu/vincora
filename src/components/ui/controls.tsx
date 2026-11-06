@@ -60,7 +60,9 @@ export function Select({
   options,
   placeholder = "Selecione",
   emptyText,
+  hideLabel,
 }: {
+  hideLabel?: boolean;
   label: string;
   value?: string;
   onValueChange: (v: string) => void;
@@ -71,7 +73,7 @@ export function Select({
   const id = useId();
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={id} className="text-sm font-medium text-text">
+      <label htmlFor={id} className={hideLabel ? "sr-only" : "text-sm font-medium text-text"}>
         {label}
       </label>
       {options.length === 0 ? (

@@ -1,0 +1,3 @@
+Modelos de e-mail do Supabase Auth (Painel → Authentication → Emails → Templates).
+Cole o HTML de cada arquivo no template correspondente e use o assunto indicado no topo.
+Os links usam token_hash + type, tratados em /auth/callback.

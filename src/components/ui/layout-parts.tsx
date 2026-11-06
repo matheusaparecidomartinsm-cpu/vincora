@@ -1,6 +1,6 @@
 "use client";
 import { clsx } from "clsx";
-import { Box, FolderOpen, HelpCircle, Package, Settings } from "lucide-react";
+import { Box, CircleUser, FolderOpen, HelpCircle, Package, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -11,13 +11,15 @@ import { MobileNav } from "./mobile-nav";
 
 export function AppHeader() {
   const path = usePathname() ?? "/";
-  const current = path === "/" || path.startsWith("/criar") ? "modelos" : path.startsWith("/facas") ? "facas" : path.startsWith("/config") ? "config" : path.startsWith("/ajuda") ? "ajuda" : null;
+  const current = path === "/" || path.startsWith("/criar") ? "modelos" : path.startsWith("/facas") ? "facas" : path.startsWith("/config") ? "config" : path.startsWith("/ajuda") ? "ajuda" : path.startsWith("/conta") ? "conta" : null;
   const nav = [
     { k: "modelos", href: "/", label: "Modelos", Icon: Box },
     { k: "facas", href: "/facas", label: "Facas salvas", Icon: FolderOpen },
     { k: "config", href: "/config/materiais", label: "Configurações", Icon: Settings },
     { k: "ajuda", href: "/ajuda", label: "Ajuda", Icon: HelpCircle },
+    { k: "conta", href: "/conta", label: "Conta", Icon: CircleUser },
   ] as const;
+  const semMenu = ["/login", "/cadastro", "/esqueci-senha", "/bem-vindo"].some((p) => path.startsWith(p));
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-surface">
       <a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:rounded-md focus:bg-surface focus:p-2">
@@ -25,7 +27,7 @@ export function AppHeader() {
       </a>
       <div className="mx-auto flex h-header-h max-w-content-max items-center gap-6 px-4">
         <Link href="/" className="text-md font-semibold text-text">Gerador de Facas</Link>
-        <nav aria-label="Principal" className="hidden gap-1 md:flex">
+        {!semMenu && <nav aria-label="Principal" className="hidden flex-1 gap-1 md:flex">
           {nav.map(({ k, href, label, Icon }) => (
             <Link
               key={k}
@@ -40,8 +42,8 @@ export function AppHeader() {
               {label}
             </Link>
           ))}
-        </nav>
-        <MobileNav current={current} items={nav.map(({ k, href, label }) => ({ k, href, label }))} />
+        </nav>}
+        {!semMenu && <MobileNav current={current} items={nav.map(({ k, href, label }) => ({ k, href, label }))} />}
       </div>
     </header>
   );

@@ -128,23 +128,33 @@ export function Editor({ slug }: { slug: string }) {
       const res = await fetch("/api/export", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ spec: result.spec, os: record?.osNumero, cliente: record?.cliente }),
+        body: JSON.stringify({ spec: result.spec, dielineId: record?.id ?? null, os: record?.osNumero, cliente: record?.cliente }),
       });
       if (!res.ok) throw new Error((await res.json().catch(() => null))?.error ?? "Falha ao gerar os arquivos.");
-      const blob = await res.blob();
-      const filename = res.headers.get("X-Filename") ?? "faca.zip";
-      const baixar = () => downloadBlob(blob, filename);
-      baixar();
-      await data.recordExport({
-        dielineId: record?.id ?? null,
-        modelSlug: meta.slug,
-        spec: result.spec,
-        motorVersao: res.headers.get("X-Motor") ?? "",
-        filename,
-        bboxW: result.dieline.bbox.w,
-        bboxH: result.dieline.bbox.h,
-        papel: res.headers.get("X-Papel") ?? "",
-      });
+      let filename: string;
+      let baixar: () => void;
+      if (res.headers.get("Content-Type")?.includes("application/json")) {
+        // com backend: o servidor já guardou o .zip e registrou o export; baixa pelo link assinado
+        const body = (await res.json()) as { url: string; filename: string; exportId: string };
+        filename = body.filename;
+        downloadUrl(body.url, filename);
+        baixar = () => downloadUrl(`/api/exports/${body.exportId}`, filename);
+      } else {
+        const blob = await res.blob();
+        filename = res.headers.get("X-Filename") ?? "faca.zip";
+        baixar = () => downloadBlob(blob, filename);
+        baixar();
+        await data.recordExport({
+          dielineId: record?.id ?? null,
+          modelSlug: meta.slug,
+          spec: result.spec,
+          motorVersao: res.headers.get("X-Motor") ?? "",
+          filename,
+          bboxW: result.dieline.bbox.w,
+          bboxH: result.dieline.bbox.h,
+          papel: res.headers.get("X-Papel") ?? "",
+        });
+      }
       toast({ tone: "success", title: "Arquivos gerados", description: filename, action: { label: "Baixar de novo", onClick: baixar } });
     } catch (e) {
       toast({ tone: "danger", title: "Não foi possível exportar", description: e instanceof Error ? e.message : "Tente de novo." });
@@ -386,13 +396,18 @@ function EditorSkeleton() {
   );
 }
 
-function downloadBlob(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob);
+function downloadUrl(url: string, filename: string) {
   const a = document.createElement("a");
   a.href = url;
   a.download = filename;
+  a.rel = "noopener";
   document.body.appendChild(a);
   a.click();
   a.remove();
+}
+
+function downloadBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  downloadUrl(url, filename);
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }

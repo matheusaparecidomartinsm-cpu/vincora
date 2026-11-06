@@ -49,6 +49,8 @@ export type ExportRecord = {
 
 export type Member = { id: string; nome: string; email: string; papel: "admin" | "member" };
 
+export type Invite = { id: string; email: string; papel: "admin" | "member"; expiresAt: string; createdAt: string };
+
 export type SaveDielineInput = Omit<DielineRecord, "id" | "orgId" | "createdBy" | "createdAt" | "updatedAt"> & { id?: string };
 export type SaveMaterialInput = { id?: string; nome: string; gramaturaG: number | null; espessuraMm: number };
 
@@ -65,4 +67,11 @@ export interface DataLayer {
   recordExport(input: Omit<ExportRecord, "id" | "orgId" | "createdBy" | "createdAt">): Promise<ExportRecord>;
   listExports(opts?: { dielineId?: string; limit?: number }): Promise<ExportRecord[]>;
   listMembers(): Promise<Member[]>;
+  setMemberRole(userId: string, papel: "admin" | "member"): Promise<void>;
+  removeMember(userId: string): Promise<void>;
+  listInvites(): Promise<Invite[]>;
+  /** cria o convite; quando há backend, o servidor também manda o e-mail */
+  invite(email: string, papel: "admin" | "member"): Promise<{ emailEnviado: boolean }>;
+  revokeInvite(id: string): Promise<void>;
+  updateMyName(nome: string): Promise<void>;
 }

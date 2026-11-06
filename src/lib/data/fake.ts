@@ -3,13 +3,13 @@
  * Camada de dados FALSA: guarda tudo no localStorage do navegador.
  * Mesmas assinaturas da versão Supabase — trocar a implementação não muda nenhuma tela.
  */
-import type { DataLayer, DielineRecord, ExportRecord, Material, Member } from "./types";
+import type { DataLayer, DielineRecord, ExportRecord, Invite, Material, Member } from "./types";
 
 const KEY = "gerador-facas:v1";
 const ORG = "org-profood";
 const ME: Member = { id: "u-matheus", nome: "Matheus A. Martins", email: "pcp@profood.com.br", papel: "admin" };
 
-type DB = { materials: Material[]; dielines: DielineRecord[]; exports: ExportRecord[]; members: Member[] };
+type DB = { materials: Material[]; dielines: DielineRecord[]; exports: ExportRecord[]; members: Member[]; invites?: Invite[] };
 
 const now = () => new Date().toISOString();
 const uid = () => (globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2));
@@ -149,6 +149,47 @@ export const fakeData: DataLayer = {
   },
   async listMembers() {
     return delay(load().members);
+  },
+  async setMemberRole(userId, papel) {
+    const db = load();
+    const admins = db.members.filter((m) => m.papel === "admin");
+    if (papel === "member" && admins.length === 1 && admins[0].id === userId) throw new Error("A organização precisa de pelo menos um administrador.");
+    db.members = db.members.map((m) => (m.id === userId ? { ...m, papel } : m));
+    save(db);
+    return delay(undefined);
+  },
+  async removeMember(userId) {
+    const db = load();
+    const alvo = db.members.find((m) => m.id === userId);
+    if (alvo?.papel === "admin" && db.members.filter((m) => m.papel === "admin").length === 1) throw new Error("A organização precisa de pelo menos um administrador.");
+    db.members = db.members.filter((m) => m.id !== userId);
+    save(db);
+    return delay(undefined);
+  },
+  async listInvites() {
+    return delay(load().invites ?? []);
+  },
+  async invite(email, papel) {
+    const db = load();
+    const e = email.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) throw new Error("E-mail inválido.");
+    if (db.members.some((m) => m.email.toLowerCase() === e)) throw new Error("Essa pessoa já está na equipe.");
+    if ((db.invites ?? []).some((i) => i.email === e)) throw new Error("Já existe um convite pendente para esse e-mail.");
+    db.invites = [...(db.invites ?? []), { id: uid(), email: e, papel, createdAt: now(), expiresAt: new Date(Date.now() + 14 * 864e5).toISOString() }];
+    save(db);
+    return delay({ emailEnviado: false });
+  },
+  async revokeInvite(id) {
+    const db = load();
+    db.invites = (db.invites ?? []).filter((i) => i.id !== id);
+    save(db);
+    return delay(undefined);
+  },
+  async updateMyName(nome) {
+    const db = load();
+    db.members = db.members.map((m) => (m.id === ME.id ? { ...m, nome } : m));
+    save(db);
+    return delay(undefined);
   },
 };
 
