@@ -68,6 +68,11 @@
   --l-control-sm: 32px;
   --l-control-md: 40px;
   --l-control-lg: 48px;
+  --l-editor-max: 1600px;
+  --l-dialog-w: 480px;
+  --l-toast-w: 360px;
+  --l-viewer-min-h: 420px;
+  --l-gutter: 32px;
 }
 
 @theme inline {
@@ -146,4 +151,9 @@
   --spacing-control-sm: var(--l-control-sm);
   --spacing-control-md: var(--l-control-md);
   --spacing-control-lg: var(--l-control-lg);
+  --spacing-editor-max: var(--l-editor-max);
+  --spacing-dialog-w: var(--l-dialog-w);
+  --spacing-toast-w: var(--l-toast-w);
+  --spacing-viewer-min-h: var(--l-viewer-min-h);
+  --spacing-gutter: var(--l-gutter);
 }

@@ -1,5 +1,6 @@
 declare module "clipper-lib" {
   type IntPoint = { X: number; Y: number };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   class ClipperOffset {
     constructor(miterLimit?: number, arcTolerance?: number);
     AddPath(path: IntPoint[], joinType: number, endType: number): void;

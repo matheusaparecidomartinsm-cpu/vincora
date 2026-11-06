@@ -16,7 +16,7 @@ const icons = { info: Info, accent: Info, neutral: Info, success: CheckCircle2, 
 
 export function Badge({ tone = "neutral", children }: { tone?: Tone; children: ReactNode }) {
   return (
-    <span className={clsx("inline-flex h-5 items-center rounded-sm px-2 text-xs font-medium", soft[tone])}>
+    <span className={clsx("inline-flex h-5 shrink-0 items-center whitespace-nowrap rounded-sm px-2 text-xs font-medium", soft[tone])}>
       {children}
     </span>
   );

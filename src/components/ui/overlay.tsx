@@ -25,7 +25,7 @@ export function Dialog({
       {trigger && <RDialog.Trigger asChild>{trigger}</RDialog.Trigger>}
       <RDialog.Portal>
         <RDialog.Overlay className="fixed inset-0 z-40 bg-text/40" />
-        <RDialog.Content className="fixed left-1/2 top-1/2 z-50 w-[min(480px,calc(100vw-32px))] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-surface p-6 shadow-lg">
+        <RDialog.Content className="fixed left-1/2 top-1/2 z-50 w-[min(var(--l-dialog-w),calc(100vw-var(--l-gutter)))] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-surface p-6 shadow-lg">
           <div className="mb-4 flex items-start justify-between gap-4">
             <div className="flex flex-col gap-1">
               <RDialog.Title className="text-lg font-semibold text-text">{title}</RDialog.Title>
@@ -44,7 +44,7 @@ export function Dialog({
 
 export const ToastProvider = RToast.Provider;
 export const ToastViewport = () => (
-  <RToast.Viewport className="fixed bottom-4 right-4 z-50 flex w-[360px] max-w-[calc(100vw-32px)] flex-col gap-2" />
+  <RToast.Viewport className="fixed bottom-4 right-4 z-50 flex w-toast-w max-w-[calc(100vw-var(--l-gutter))] flex-col gap-2" />
 );
 
 export function Toast({
