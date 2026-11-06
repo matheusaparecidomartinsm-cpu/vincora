@@ -158,9 +158,9 @@ export function CategoryChips({
 }
 
 /* Abas 2D / 3D ---------------------------------------------------------------- */
-export function ViewTabs({ tabs }: { tabs: { value: string; label: string; content: ReactNode }[] }) {
+export function ViewTabs({ tabs, fill }: { tabs: { value: string; label: string; content: ReactNode }[]; fill?: boolean }) {
   return (
-    <RTabs.Root defaultValue={tabs[0].value} className="flex flex-col">
+    <RTabs.Root defaultValue={tabs[0].value} className={clsx("flex flex-col", fill && "h-full")}>
       <RTabs.List aria-label="Visualização" className="flex border-b border-border">
         {tabs.map((t) => (
           <RTabs.Trigger
@@ -173,7 +173,7 @@ export function ViewTabs({ tabs }: { tabs: { value: string; label: string; conte
         ))}
       </RTabs.List>
       {tabs.map((t) => (
-        <RTabs.Content key={t.value} value={t.value} className="pt-4">
+        <RTabs.Content key={t.value} value={t.value} className={clsx(fill ? "min-h-0 flex-1 pt-3 data-[state=inactive]:hidden" : "pt-4")}>
           {t.content}
         </RTabs.Content>
       ))}
