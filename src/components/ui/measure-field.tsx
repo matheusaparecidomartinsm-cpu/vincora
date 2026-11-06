@@ -72,8 +72,7 @@ export function MeasureField({ label, value, onChange, help, error, decimals = 1
         className={clsx(
           "flex h-control-md items-center rounded-md border bg-surface px-3",
           "focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus",
-          error ? "border-danger" : "border-border-input",
-          disabled && "opacity-50",
+          error ? "border-danger" : disabled ? "border-border bg-surface-sunken" : "border-border-input",
         )}
       >
         <input
@@ -87,10 +86,10 @@ export function MeasureField({ label, value, onChange, help, error, decimals = 1
           onChange={(e) => commit(e.target.value)}
           onKeyDown={onKeyDown}
           onPaste={onPaste}
-          className="num w-full min-w-0 bg-transparent text-md text-text outline-none placeholder:text-text-subtle"
+          className={clsx("num w-full min-w-0 bg-transparent text-md outline-none placeholder:text-text-subtle", disabled ? "text-text-muted" : "text-text")}
           placeholder="0"
         />
-        <span aria-hidden className="num pl-2 text-sm text-text-subtle">
+        <span aria-hidden className={clsx("num pl-2 text-sm", disabled ? "text-text-muted" : "text-text-subtle")}>
           {unit}
         </span>
       </div>

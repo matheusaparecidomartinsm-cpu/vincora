@@ -358,7 +358,7 @@ function SaveDialog({
           }
         }}
       >
-        <TextInput name="nome" label="Nome" value={nome} onChange={setNome} placeholder="Ex.: Caixa vela 200 ml" autoFocus error={err ?? undefined} />
+        <TextInput name="nome" label="Nome" value={nome} onChange={setNome} placeholder="Ex.: Caixa vela 200 ml" autoFocus maxLength={120} error={err ?? undefined} />
         <div className="grid grid-cols-2 gap-3">
           <TextInput name="os" label="Nº da O.S." value={os} onChange={setOs} placeholder="Opcional" mono maxLength={20} />
           <TextInput name="cliente" label="Cliente" value={cliente} onChange={setCliente} placeholder="Opcional" />

@@ -53,7 +53,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
           className="absolute inset-0 m-auto h-4 w-4 rounded-full border-2 border-current border-r-transparent [animation:spin_0.7s_linear_infinite]"
         />
       )}
-      <span className={clsx("inline-flex items-center gap-2", loading && "invisible")}>{children}</span>
+      <span className={clsx("inline-flex items-center gap-2", loading && "opacity-0")}>{children}</span>
     </button>
   );
 });
