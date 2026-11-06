@@ -7,7 +7,7 @@ import { AppHeader } from "@/components/ui/layout-parts";
 import { ToastHost } from "@/components/ui/toast-host";
 
 export const metadata: Metadata = {
-  title: { default: "Vincora — facas de embalagem", template: "%s · Vincora" },
+  title: { default: "Facas Desenvolvimento", template: "%s · Facas Desenvolvimento" },
   description: "Faca de corte e vinco na medida, pronta para a produção. Ferramenta interna ProFood.",
 };
 

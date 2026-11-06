@@ -26,7 +26,7 @@ export function AppHeader() {
         Ir para o conteúdo
       </a>
       <div className="mx-auto flex h-header-h max-w-content-max items-center gap-6 px-4">
-        <Link href="/" className="text-md font-semibold text-text">Vincora</Link>
+        <Link href="/" className="text-md font-semibold text-text">Facas Desenvolvimento</Link>
         {!semMenu && <nav aria-label="Principal" className="hidden flex-1 gap-1 md:flex">
           {nav.map(({ k, href, label, Icon }) => (
             <Link

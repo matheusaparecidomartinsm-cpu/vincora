@@ -62,8 +62,8 @@ export type PdfMeta = {
 export async function toPDF(dl: Dieline, meta: PdfMeta): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
   doc.setTitle(meta.titulo);
-  doc.setCreator("Vincora");
-  doc.setProducer("Vincora — motor " + meta.motorVersao);
+  doc.setCreator("Facas Desenvolvimento");
+  doc.setProducer("Facas Desenvolvimento — motor " + meta.motorVersao);
 
   const paper = smallestPaper(dl.bbox.w, dl.bbox.h);
   const pw = paper.landscape ? paper.h : paper.w;
