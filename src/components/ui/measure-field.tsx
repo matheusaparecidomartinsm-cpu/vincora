@@ -1,6 +1,6 @@
 "use client";
 import { clsx } from "clsx";
-import { useId, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useState, type ClipboardEvent, type KeyboardEvent } from "react";
 
 /** Converte "70,5" / "70.5" em número; vazio ou inválido = null. */
 export function parseMm(raw: string): number | null {
@@ -23,11 +23,30 @@ type Props = {
   decimals?: number;
   disabled?: boolean;
   unit?: string;
+  /** colar "70x150x40" chama isto com os três números */
+  onPasteTriple?: (v: [number, number, number]) => void;
+  id?: string;
 };
 
-export function MeasureField({ label, value, onChange, help, error, decimals = 1, disabled, unit = "mm" }: Props) {
-  const id = useId();
+export function MeasureField({ label, value, onChange, help, error, decimals = 1, disabled, unit = "mm", onPasteTriple, id: idProp }: Props) {
+  const autoId = useId();
+  const id = idProp ?? autoId;
   const [text, setText] = useState(value == null ? "" : formatMm(value, decimals));
+
+  // sincroniza quando o valor muda por fora (ex.: abrir faca salva, trocar material)
+  useEffect(() => {
+    setText((cur) => (parseMm(cur) === value ? cur : value == null ? "" : formatMm(value, decimals)));
+  }, [value, decimals]);
+
+  function onPaste(e: ClipboardEvent<HTMLInputElement>) {
+    if (!onPasteTriple) return;
+    const m = e.clipboardData.getData("text").match(/^\s*([\d.,]+)\s*[x×*X]\s*([\d.,]+)\s*[x×*X]\s*([\d.,]+)\s*$/);
+    if (!m) return;
+    const nums = m.slice(1, 4).map(parseMm);
+    if (nums.some((v) => v == null)) return;
+    e.preventDefault();
+    onPasteTriple(nums as [number, number, number]);
+  }
   const describedBy = [help && `${id}-help`, error && `${id}-err`].filter(Boolean).join(" ") || undefined;
 
   function commit(next: string) {
@@ -67,6 +86,7 @@ export function MeasureField({ label, value, onChange, help, error, decimals = 1
           aria-describedby={describedBy}
           onChange={(e) => commit(e.target.value)}
           onKeyDown={onKeyDown}
+          onPaste={onPaste}
           className="num w-full min-w-0 bg-transparent text-md text-text outline-none placeholder:text-text-subtle"
           placeholder="0"
         />
