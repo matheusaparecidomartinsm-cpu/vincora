@@ -2,13 +2,14 @@
 import { Download, Save, Trash2 } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
 import { DielineViewer } from "@/components/dieline/dieline-viewer";
-import { sampleTuckBox } from "@/components/dieline/sample";
+import { build } from "@/lib/dieline/models";
 import { Button } from "@/components/ui/button";
 import { CategoryChips, Select, Switch, ViewTabs } from "@/components/ui/controls";
 import { Alert, Badge, RuleNotice } from "@/components/ui/feedback";
-import { AppHeader, DataTable, ModelCard, SpecSummary } from "@/components/ui/layout-parts";
+import { DataTable, ModelCard, SpecSummary } from "@/components/ui/layout-parts";
 import { MeasureField } from "@/components/ui/measure-field";
-import { Dialog, Toast, ToastProvider, ToastViewport } from "@/components/ui/overlay";
+import { Dialog } from "@/components/ui/overlay";
+import { useToast } from "@/components/ui/toast-host";
 import tokens from "@/design/tokens.json";
 
 const textClass = { "2xl": "text-2xl", xl: "text-xl", lg: "text-lg", md: "text-md", sm: "text-sm", xs: "text-xs" } as const;
@@ -33,34 +34,37 @@ export default function DesignPage() {
   const [sangria, setSangria] = useState(true);
   const [cola, setCola] = useState(true);
   const [cat, setCat] = useState("todos");
-  const [toast, setToast] = useState(false);
+  const toast = useToast();
   const [exporting, setExporting] = useState(false);
 
   const pErr = P != null && P > 50 ? "No fundo cartucho a profundidade vai até 50 mm." : undefined;
   const valid = L && A && P && !pErr;
-  const dieline = useMemo(
-    () => (L && A && P ? sampleTuckBox(L, A, Math.min(P, 50), { sangria, cola }) : null),
-    [L, A, P, sangria, cola],
-  );
-  const thumb = useMemo(() => sampleTuckBox(60, 110, 35), []);
+  const dieline = useMemo(() => {
+    if (!L || !A || !P) return null;
+    const r = build({ model: "fundo-cartucho", largura: L, altura: A, profundidade: Math.min(P, 50), espessura: 0.345, sangria, areasCola: cola });
+    return r.ok ? r.dieline : null;
+  }, [L, A, P, sangria, cola]);
+  const thumb = useMemo(() => {
+    const r = build({ model: "fundo-cartucho", largura: 60, altura: 110, profundidade: 35, espessura: 0.345, sangria: false, areasCola: false });
+    return r.ok ? r.dieline : null;
+  }, []);
 
   function exportar() {
     setExporting(true);
     setTimeout(() => {
       setExporting(false);
-      setToast(true);
+      toast({ tone: "success", title: "Arquivos gerados", description: "faca-cartucho-70x150x40.zip", action: { label: "Baixar de novo", onClick: () => {} } });
     }, 900);
   }
 
   return (
-    <ToastProvider>
-      <AppHeader current={null} />
+    <>
       <main id="conteudo" className="mx-auto flex max-w-content-max flex-col gap-12 px-4 py-10">
         <div className="flex flex-col gap-2">
           <h1 className="text-xl font-semibold">Sistema de design</h1>
           <p className="max-w-[60ch] text-md text-text-muted">
             Primitivas da ferramenta em isolamento. Tokens em <code className="num text-sm">replica/design/tokens.json</code>.
-            A faca desta página é uma amostra visual, não geometria de produção.
+            A faca desta página vem do motor real (fundo cartucho, cartão 0,345 mm).
           </p>
         </div>
 
@@ -263,15 +267,7 @@ export default function DesignPage() {
           </div>
         </Section>
       </main>
-      <Toast
-        open={toast}
-        onOpenChange={setToast}
-        title="Arquivos gerados"
-        description="faca-cartucho-70x150x40.zip"
-        action={{ label: "Baixar de novo", onClick: () => {} }}
-      />
-      <ToastViewport />
-    </ToastProvider>
+    </>
   );
 }
 
