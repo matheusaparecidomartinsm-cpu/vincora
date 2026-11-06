@@ -5,7 +5,8 @@
 -- Supabase concede tudo nas tabelas a anon/authenticated e deixa a RLS restringir.
 grant all on all tables in schema public to anon, authenticated, service_role;
 grant execute on all functions in schema public to authenticated;
-revoke execute on function public.accept_invites_for(uuid, text) from authenticated;
+grant execute on function private.is_member(uuid), private.is_admin(uuid), private.shares_org(uuid) to authenticated;
+revoke execute on function private.accept_invites_for(uuid, text) from authenticated;
 
 create or replace function pg_temp.as_user(p uuid) returns void language plpgsql as $$
 begin
@@ -99,7 +100,7 @@ select pg_temp.as_user('00000000-0000-0000-0000-00000000000c');
 select pg_temp.check(public.accept_my_invites() = 1, 'Carla aceita 1 convite');
 select pg_temp.check((select count(*) from public.dielines) = 1, 'Carla vê a faca da org A');
 select pg_temp.check((select count(*) from public.user_profiles) = 2, 'Carla vê o perfil da Ana (mesma org), não o do Bruno');
-select pg_temp.expect_error($$select public.accept_invites_for('00000000-0000-0000-0000-00000000000c', 'bruno@outra.test')$$, 'função interna de convite não é chamável pelo app');
+select pg_temp.expect_error($$select private.accept_invites_for('00000000-0000-0000-0000-00000000000c', 'bruno@outra.test')$$, 'função interna de convite não é chamável pelo app');
 select pg_temp.expect_error(format($$insert into public.materials (org_id, nome, espessura_mm) values (%L, 'Kraft', 0.4)$$, current_setting('t.org_a')),
   'membro não cadastra material');
 delete from public.dielines where id = current_setting('t.faca_a')::uuid;  -- não é dela: 0 linhas
