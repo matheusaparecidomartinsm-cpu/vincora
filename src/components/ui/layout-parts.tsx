@@ -1,17 +1,22 @@
+"use client";
 import { clsx } from "clsx";
-import { Box, FolderOpen, Settings } from "lucide-react";
+import { Box, FolderOpen, HelpCircle, Package, Settings } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { DielineViewer } from "../dieline/dieline-viewer";
-import type { SampleDieline } from "../dieline/sample";
+import type { Dieline } from "@/lib/dieline/types";
 import { Badge } from "./feedback";
 import { MobileNav } from "./mobile-nav";
 
-export function AppHeader({ current }: { current: "modelos" | "facas" | "config" | null }) {
+export function AppHeader() {
+  const path = usePathname() ?? "/";
+  const current = path === "/" || path.startsWith("/criar") ? "modelos" : path.startsWith("/facas") ? "facas" : path.startsWith("/config") ? "config" : path.startsWith("/ajuda") ? "ajuda" : null;
   const nav = [
     { k: "modelos", href: "/", label: "Modelos", Icon: Box },
     { k: "facas", href: "/facas", label: "Facas salvas", Icon: FolderOpen },
     { k: "config", href: "/config/materiais", label: "Configurações", Icon: Settings },
+    { k: "ajuda", href: "/ajuda", label: "Ajuda", Icon: HelpCircle },
   ] as const;
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-surface">
@@ -19,7 +24,7 @@ export function AppHeader({ current }: { current: "modelos" | "facas" | "config"
         Ir para o conteúdo
       </a>
       <div className="mx-auto flex h-header-h max-w-content-max items-center gap-6 px-4">
-        <span className="text-md font-semibold text-text">Gerador de Facas</span>
+        <Link href="/" className="text-md font-semibold text-text">Gerador de Facas</Link>
         <nav aria-label="Principal" className="hidden gap-1 md:flex">
           {nav.map(({ k, href, label, Icon }) => (
             <Link
@@ -48,22 +53,31 @@ export function ModelCard({
   categoria,
   preview,
   enabled = true,
+  descricao,
 }: {
+  descricao?: string;
   slug: string;
   nome: string;
   categoria: string;
-  preview: SampleDieline;
+  preview?: Dieline | null;
   enabled?: boolean;
 }) {
   const body = (
     <>
-      <div className={clsx("rounded-md bg-canvas p-3", !enabled && "opacity-50")}>
-        <DielineViewer dieline={preview} label={`Esquema de ${nome}`} thumbnail />
+      <div className="rounded-md bg-canvas p-3">
+        {preview ? (
+          <DielineViewer dieline={preview} label={`Esquema de ${nome}`} thumbnail />
+        ) : (
+          <div className="grid aspect-[4/3] w-full place-items-center text-text-disabled">
+            <Package size={40} strokeWidth={1.25} aria-hidden />
+          </div>
+        )}
       </div>
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="text-md font-semibold text-text">{nome}</p>
           <p className="text-xs text-text-muted">{categoria}</p>
+          {descricao && <p className="mt-2 text-sm text-text-muted">{descricao}</p>}
         </div>
         {!enabled && <Badge tone="neutral">Em breve</Badge>}
       </div>
@@ -72,9 +86,14 @@ export function ModelCard({
   const cls = "flex flex-col gap-3 rounded-lg border border-border bg-surface p-4 transition-[border-color,box-shadow] duration-[var(--m-fast)]";
   if (!enabled)
     return (
-      <div aria-disabled className={cls}>
-        {body}
-        <p className="sr-only">Modelo ainda sem protótipo aprovado.</p>
+      <div aria-disabled className="flex items-center gap-3 rounded-lg border border-dashed border-border-strong bg-surface px-4 py-3">
+        <Package size={20} strokeWidth={1.5} aria-hidden className="shrink-0 text-text-subtle" />
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium text-text">{nome}</p>
+          <p className="text-xs text-text-muted">{categoria}</p>
+        </div>
+        <Badge tone="neutral">Em breve</Badge>
+        <p className="sr-only">Modelo ainda em desenvolvimento.</p>
       </div>
     );
   return (
