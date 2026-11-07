@@ -17,10 +17,10 @@ export default function LoginPage() {
           glowColor="#ad6dff"
           scale={0.85}
           strands={4}
-          bend={0.6}
-          crackle={1.5}
+          bend={0.3}
+          crackle={0.8}
           arcs={1}
-          speed={2.5}
+          speed={0.8}
           interactive
         />
       </div>
