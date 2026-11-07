@@ -17,13 +17,12 @@ export default function CatalogoPage() {
   }, []);
 
   const cats = useMemo(() => {
-    const presentes = [...new Set(CATALOGO.map((m) => m.categoria))];
+    const presentes = [...new Set(CATALOGO.filter((m) => m.implementado).map((m) => m.categoria))];
     return [{ value: "todos", label: "Todos" }, ...presentes.map((c) => ({ value: c, label: CATEGORIAS[c] }))];
   }, []);
 
-  const lista = CATALOGO.filter((m) => cat === "todos" || m.categoria === cat);
-  const prontos = lista.filter((m) => m.implementado);
-  const emBreve = lista.filter((m) => !m.implementado);
+  const lista = CATALOGO.filter((m) => m.implementado && (cat === "todos" || m.categoria === cat));
+  const prontos = lista;
 
   return (
     <Page
@@ -58,19 +57,6 @@ export default function CatalogoPage() {
         </section>
       )}
 
-      {emBreve.length > 0 && (
-        <section aria-labelledby="h-breve" className="flex flex-col gap-3">
-          <h2 id="h-breve" className="text-sm font-semibold text-text-muted">
-            Em desenvolvimento
-          </h2>
-          <p className="text-sm text-text-muted">Cada modelo é liberado depois de aprovado em protótipo na fábrica.</p>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {emBreve.map((m) => (
-              <ModelCard key={m.slug} slug={m.slug} nome={m.nome} categoria={CATEGORIAS[m.categoria]} enabled={false} />
-            ))}
-          </div>
-        </section>
-      )}
     </Page>
   );
 }
