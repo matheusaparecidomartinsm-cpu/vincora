@@ -9,8 +9,8 @@ export const metadata: Metadata = { title: "Entrar" };
 
 export default function LoginPage() {
   return (
-    <>
-      <div aria-hidden="true" style={{ width: "100%", height: "480px", position: "relative" }}>
+    <div className="grid min-h-[calc(100dvh-4rem)] grid-cols-1 md:grid-cols-2">
+      <div aria-hidden="true" className="relative h-64 bg-[#0b0613] md:h-auto">
         <ElectricLogo
           src="/logo.svg"
           color="#ecc7ff"
@@ -24,6 +24,7 @@ export default function LoginPage() {
           interactive
         />
       </div>
+      <div className="flex items-center justify-center">
       <AuthShell
         title="Entrar"
         description="Use o e-mail da empresa."
@@ -40,6 +41,7 @@ export default function LoginPage() {
           <LoginForm />
         </Suspense>
       </AuthShell>
-    </>
+      </div>
+    </div>
   );
 }
