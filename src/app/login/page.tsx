@@ -12,7 +12,7 @@ export default function LoginPage() {
     <div className="grid min-h-[calc(100dvh-4rem)] grid-cols-1 bg-black text-white md:grid-cols-2">
       <div aria-hidden="true" className="relative h-64 bg-black md:h-auto">
         <ElectricLogo
-          src="/logo.svg"
+          src="/logo-profood.png"
           color="#ecc7ff"
           glowColor="#ad6dff"
           scale={0.85}
