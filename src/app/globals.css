@@ -27,3 +27,8 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pulse-soft { 50% { opacity: 0.55; } }
+
+/* Login escuro */
+.auth-dark input { background: #0d0d0d; color: #fff; border-color: rgb(255 255 255 / 0.15); }
+.auth-dark p, .auth-dark .text-text-muted { color: rgb(255 255 255 / 0.65); }
+.auth-dark a { color: #ff4d4d; }
