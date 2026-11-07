@@ -11,7 +11,7 @@ export function AuthShell({ title, description, children, footer }: { title: str
         {description && <p className="text-sm text-text-muted">{description}</p>}
       </div>
       {BACKEND ? (
-        <div className="flex flex-col gap-4 rounded-lg border border-border bg-surface p-5">{children}</div>
+        <div className="flex flex-col gap-4 rounded-lg border border-border bg-surface p-5 text-text">{children}</div>
       ) : (
         <Alert tone="info" title="Login desligado neste ambiente">
           Sem as chaves do Supabase o app roda em modo local, com os dados no navegador.{" "}
