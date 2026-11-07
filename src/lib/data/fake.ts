@@ -23,6 +23,8 @@ function seed(): DB {
     mat("m-duplex-250", "Duplex 250 g", 250, 0.3),
     mat("m-duplex-300", "Duplex 300 g", 300, 0.345),
     mat("m-triplex-350", "Triplex 350 g", 350, 0.45),
+    mat("m-black-300", "Black 300 g", 300, 0.4),
+    mat("m-ecokraft-300", "Ecokraft 300 g", 300, 0.42),
   ];
   const dl = (id: string, nome: string, l: number, a: number, p: number, os: string | null, cliente: string | null, at: string): DielineRecord => ({
     id, orgId: ORG, createdBy: ME.id, modelSlug: "fundo-cartucho", nome, largura: l, altura: a, profundidade: p,

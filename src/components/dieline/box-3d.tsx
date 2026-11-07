@@ -14,7 +14,17 @@ const VISTA0 = { yaw: -0.6, pitch: 0.35, zoom: 1 };
 const cssVar = (n: string) => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || "#cccccc";
 
 /** Caixa montada em 3D, gerada da mesma geometria da faca. three.js só carrega quando este componente aparece. */
-export function Box3D({ spec, label }: { spec: Spec | null; label: string }) {
+export type Acabamento = "black" | "ecokraft" | null;
+
+/** Escolhe o acabamento visual a partir do nome do material. */
+export function acabamentoDoMaterial(nome?: string | null): Acabamento {
+  if (!nome) return null;
+  if (/kraft/i.test(nome)) return "ecokraft";
+  if (/black|preto/i.test(nome)) return "black";
+  return null;
+}
+
+export function Box3D({ spec, label, acabamento = null }: { spec: Spec | null; label: string; acabamento?: Acabamento }) {
   const host = useRef<HTMLDivElement>(null);
   const engine = useRef<Engine | null>(null);
   const [fold, setFold] = useState(100);
@@ -58,6 +68,19 @@ export function Box3D({ spec, label }: { spec: Spec | null; label: string }) {
 
       const papel = new THREE.MeshLambertMaterial({ color: new THREE.Color(cssVar("--c-surface")), side: THREE.DoubleSide });
       const borda = new THREE.LineBasicMaterial({ color: new THREE.Color(cssVar("--c-line-dim")) });
+      let textura: InstanceType<typeof THREE.Texture> | null = null;
+      if (acabamento === "black") {
+        papel.color.set("#011622");
+        borda.color.set("#3a4a58");
+      } else if (acabamento === "ecokraft") {
+        papel.color.set("#ffffff");
+        borda.color.set("#7a5f3e");
+        textura = new THREE.TextureLoader().load("/texturas/ecokraft.jpg", () => engine.current?.setView(atual.yaw, atual.pitch, atual.zoom));
+        textura.wrapS = textura.wrapT = THREE.RepeatWrapping;
+        textura.repeat.set(1 / 180, 1 / 180); // UV da geometria está em mm
+        textura.colorSpace = THREE.SRGBColorSpace;
+        papel.map = textura;
+      }
       const m = montar(fn(spec), { papel, borda });
       const pivo = new THREE.Group();
       pivo.add(m.raiz);
@@ -110,6 +133,7 @@ export function Box3D({ spec, label }: { spec: Spec | null; label: string }) {
           ro.disconnect();
           m.dispose();
           papel.dispose();
+          textura?.dispose();
           borda.dispose();
           renderer.dispose();
           renderer.domElement.remove();
@@ -125,7 +149,7 @@ export function Box3D({ spec, label }: { spec: Spec | null; label: string }) {
     };
     // a cena depende só da spec
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [specKey]);
+  }, [specKey, acabamento]);
 
   useEffect(() => engine.current?.setFold(fold / 100), [fold, estado]);
   useEffect(() => engine.current?.setView(vista.yaw, vista.pitch, vista.zoom), [vista, estado]);

@@ -3,7 +3,7 @@ import { ArrowLeft, Download, Save } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Box3D } from "@/components/dieline/box-3d";
+import { Box3D, acabamentoDoMaterial } from "@/components/dieline/box-3d";
 import { DielineViewer } from "@/components/dieline/dieline-viewer";
 import { Button } from "@/components/ui/button";
 import { Select, Switch, ViewTabs } from "@/components/ui/controls";
@@ -395,7 +395,7 @@ export function Editor({ slug }: { slug: string }) {
             {
               value: "3d",
               label: "Caixa 3D",
-              content: <Box3D spec={vazio ? null : lastValidSpec.current} label={meta.nome} />,
+              content: <Box3D spec={vazio ? null : lastValidSpec.current} label={meta.nome} acabamento={acabamentoDoMaterial(materials?.find((x) => x.id === materialId)?.nome)} />,
             },
           ]}
         />
