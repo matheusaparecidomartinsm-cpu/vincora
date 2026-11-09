@@ -1,7 +1,9 @@
 "use client";
 import { useMemo, useState } from "react";
 import { CategoryChips } from "@/components/ui/controls";
+import { FacaCasaCard } from "@/components/ui/faca-casa-card";
 import { ModelCard } from "@/components/ui/layout-parts";
+import { FACAS_CASA } from "@/lib/facas-casa";
 import { Page } from "@/components/ui/page";
 import { build, CATALOGO, CATEGORIAS, LINHAS, LINHAS_DO_MODELO, MODELS } from "@/lib/dieline/models";
 
@@ -22,6 +24,7 @@ export default function CatalogoPage() {
     (m) => m.implementado && (cat === "todos" || (LINHAS_DO_MODELO[m.slug] ?? []).includes(cat as never)),
   );
   const prontos = lista;
+  const casa = FACAS_CASA.filter((f) => cat === "todos" || f.linha === cat);
 
   return (
     <Page
@@ -30,12 +33,12 @@ export default function CatalogoPage() {
     >
       <CategoryChips label="Filtrar por linha" items={cats} active={cat} onChange={setCat} />
 
-      {lista.length === 0 && <p className="text-text-muted">Ainda não há modelos nesta linha.</p>}
+      {lista.length === 0 && casa.length === 0 && <p className="text-text-muted">Ainda não há modelos nesta linha.</p>}
 
       {prontos.length > 0 && (
         <section aria-labelledby="h-prontos" className="flex flex-col gap-3">
           <h2 id="h-prontos" className="text-sm font-semibold text-text-muted">
-            Disponíveis
+            Gerar com medida livre
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {prontos.map((m) => {
@@ -56,6 +59,19 @@ export default function CatalogoPage() {
         </section>
       )}
 
+      {casa.length > 0 && (
+        <section aria-labelledby="h-casa" className="flex flex-col gap-3">
+          <h2 id="h-casa" className="text-sm font-semibold text-text-muted">
+            Facas da casa
+          </h2>
+          <p className="text-sm text-text-muted">Facas reais da ProFood, tiradas das artes aprovadas, em tamanho real.</p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {casa.map((f) => (
+              <FacaCasaCard key={f.slug} f={f} />
+            ))}
+          </div>
+        </section>
+      )}
     </Page>
   );
 }

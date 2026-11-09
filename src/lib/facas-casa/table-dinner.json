@@ -1,0 +1,258 @@
+[
+ {
+  "slug": "to-go-mini",
+  "nome": "To Go Mini",
+  "produto": "6401",
+  "faca": "T-524",
+  "fb": "FB-1972",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 90.0,
+  "profundidade": 90.0,
+  "altura": 68.0,
+  "aberta": {
+   "w": 259.0,
+   "h": 367.8
+  }
+ },
+ {
+  "slug": "to-go-mini-respiro",
+  "nome": "To Go Mini com respiro",
+  "produto": "6401",
+  "faca": "T-524",
+  "fb": "FB-1972",
+  "bl": "BL-086",
+  "linha": "table-dinner",
+  "largura": 90.0,
+  "profundidade": 90.0,
+  "altura": 68.0,
+  "aberta": {
+   "w": 259.0,
+   "h": 367.8
+  }
+ },
+ {
+  "slug": "to-go-mini-slim",
+  "nome": "To Go Mini Slim",
+  "produto": "6410",
+  "faca": "T-185",
+  "fb": "FB-1699",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 97.0,
+  "profundidade": 97.0,
+  "altura": 40.0,
+  "aberta": {
+   "w": 217.1,
+   "h": 322.7
+  }
+ },
+ {
+  "slug": "to-go-mini-slim-respiro",
+  "nome": "To Go Mini Slim com respiro",
+  "produto": "6410",
+  "faca": "T-185",
+  "fb": null,
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 97.0,
+  "profundidade": 97.0,
+  "altura": 40.0,
+  "aberta": {
+   "w": 217.1,
+   "h": 322.7
+  }
+ },
+ {
+  "slug": "to-go-p",
+  "nome": "To Go P",
+  "produto": "6402",
+  "faca": "T-001",
+  "fb": "FB-1960",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 150.0,
+  "profundidade": 105.0,
+  "altura": 67.0,
+  "aberta": {
+   "w": 324.0,
+   "h": 401.1
+  }
+ },
+ {
+  "slug": "to-go-p-respiro",
+  "nome": "To Go P com respiro",
+  "produto": "6402",
+  "faca": "T-001",
+  "fb": "FB-1960",
+  "bl": "BL-087",
+  "linha": "table-dinner",
+  "largura": 150.0,
+  "profundidade": 105.0,
+  "altura": 67.0,
+  "aberta": {
+   "w": 324.0,
+   "h": 401.1
+  }
+ },
+ {
+  "slug": "to-go-p-slim",
+  "nome": "To Go P Slim",
+  "produto": "6406",
+  "faca": "T-186",
+  "fb": "FB-1695",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 157.1,
+  "profundidade": 112.0,
+  "altura": 40.0,
+  "aberta": {
+   "w": 277.1,
+   "h": 352.7
+  }
+ },
+ {
+  "slug": "to-go-p-slim-respiro",
+  "nome": "To Go P Slim com respiro",
+  "produto": "6406",
+  "faca": "T-186",
+  "fb": "FB-1695",
+  "bl": "BL-175",
+  "linha": "table-dinner",
+  "largura": 157.1,
+  "profundidade": 112.0,
+  "altura": 40.0,
+  "aberta": {
+   "w": 277.1,
+   "h": 352.7
+  }
+ },
+ {
+  "slug": "to-go-m",
+  "nome": "To Go M",
+  "produto": "6403",
+  "faca": "T-525",
+  "fb": "FB-1964",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 195.0,
+  "profundidade": 140.0,
+  "altura": 67.5,
+  "aberta": {
+   "w": 369.0,
+   "h": 471.6
+  }
+ },
+ {
+  "slug": "to-go-m-respiro",
+  "nome": "To Go M com respiro",
+  "produto": "6403",
+  "faca": "T-525",
+  "fb": "FB-1964",
+  "bl": "BL-236",
+  "linha": "table-dinner",
+  "largura": 195.0,
+  "profundidade": 140.0,
+  "altura": 67.5,
+  "aberta": {
+   "w": 369.0,
+   "h": 471.6
+  }
+ },
+ {
+  "slug": "to-go-m-slim",
+  "nome": "To Go M Slim",
+  "produto": "6407",
+  "faca": "T-187",
+  "fb": "FB-1735",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 195.0,
+  "profundidade": 140.0,
+  "altura": 40.0,
+  "aberta": {
+   "w": 315.0,
+   "h": 408.6
+  }
+ },
+ {
+  "slug": "to-go-m-slim-respiro",
+  "nome": "To Go M Slim com respiro",
+  "produto": "6407",
+  "faca": "T-187",
+  "fb": "FB-1735",
+  "bl": "BL-166",
+  "linha": "table-dinner",
+  "largura": 195.0,
+  "profundidade": 140.0,
+  "altura": 40.0,
+  "aberta": {
+   "w": 315.0,
+   "h": 408.6
+  }
+ },
+ {
+  "slug": "to-go-g",
+  "nome": "To Go G",
+  "produto": "6104",
+  "faca": "T-045",
+  "fb": null,
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 255.0,
+  "profundidade": 140.0,
+  "altura": 67.5,
+  "aberta": {
+   "w": 450.0,
+   "h": 484.6
+  }
+ },
+ {
+  "slug": "to-go-g-respiro",
+  "nome": "To Go G com respiro",
+  "produto": "6404",
+  "faca": "T-045",
+  "fb": "FB-0441",
+  "bl": "BL-110",
+  "linha": "table-dinner",
+  "largura": 255.0,
+  "profundidade": 140.0,
+  "altura": 67.5,
+  "aberta": {
+   "w": 450.0,
+   "h": 484.6
+  }
+ },
+ {
+  "slug": "to-go-g-slim",
+  "nome": "To Go G Slim",
+  "produto": "6408",
+  "faca": "T-188",
+  "fb": null,
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 256.0,
+  "profundidade": 156.0,
+  "altura": 40.5,
+  "aberta": {
+   "w": 376.0,
+   "h": 441.1
+  }
+ },
+ {
+  "slug": "to-go-g-slim-respiro",
+  "nome": "To Go G Slim com respiro",
+  "produto": "6408",
+  "faca": "T-188",
+  "fb": null,
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 256.0,
+  "profundidade": 156.0,
+  "altura": 40.5,
+  "aberta": {
+   "w": 376.0,
+   "h": 441.1
+  }
+ }
+]
