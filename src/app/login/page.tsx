@@ -13,8 +13,8 @@ export default function LoginPage() {
       <div className="flex min-h-full flex-col items-center justify-center gap-6 px-4 py-8 md:flex-row md:gap-16">
         <div className="flex flex-col items-center gap-3">
           <Mascote />
-          <p className="login-marca">ProFood</p>
-          <p className="login-slogan">Embalando o futuro</p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-profood-cor.png" alt="ProFood Embalagens" width={220} height={85} className="h-auto w-[220px]" />
         </div>
         <div className="w-full max-w-sm">
           <AuthShell
