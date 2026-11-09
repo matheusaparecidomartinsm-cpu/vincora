@@ -69,8 +69,10 @@ export function LoginForm() {
     if (error) {
       setErro(traduz(error.message));
       setBusy(null);
+      window.dispatchEvent(new CustomEvent("login:resultado", { detail: "erro" }));
       return;
     }
+    window.dispatchEvent(new CustomEvent("login:resultado", { detail: "ok" }));
     router.replace(await destinoDepoisDoLogin(next));
     router.refresh();
   }

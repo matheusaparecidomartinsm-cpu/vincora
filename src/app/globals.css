@@ -38,3 +38,27 @@
 .auth-dark-card label { color: #fff; }
 .auth-dark button[type="submit"] { background: #d71920; color: #fff; border-color: #d71920; }
 .auth-dark button:not([type="submit"]) { background: transparent; color: #fff; border: 1px solid rgb(255 255 255 / 0.3); }
+
+/* Mascote do login */
+.mascote { position: relative; width: min(320px, 70vw); }
+.mascote__svg { width: 100%; height: auto; overflow: visible; }
+.mascote__sombra { fill: rgb(255 255 255 / 0.08); }
+.mascote__corpo { transform-origin: 120px 230px; animation: mascote-respira 3.2s ease-in-out infinite; }
+.mascote__pupila { transition: cx .18s ease, cy .18s ease; }
+.mascote__aba { transition: transform .35s cubic-bezier(.3,1.4,.5,1); transform-box: view-box; }
+.mascote__aba--esq { transform-origin: 80px 82px; }
+.mascote__aba--dir { transform-origin: 160px 82px; }
+.mascote__aba--esq.fechada, .mascote__aba--esq.espiando { transform: translateY(66px) rotate(180deg); }
+.mascote__aba--dir.fechada { transform: translateY(66px) rotate(-180deg); }
+.mascote__aba--dir.espiando { transform: translateY(20px) rotate(-120deg); }
+.mascote--festa .mascote__corpo { animation: mascote-pula .5s ease-in-out 3; }
+.mascote--triste .mascote__corpo { animation: mascote-nao .4s ease-in-out 2; }
+.mascote__confete { position: absolute; inset: 0; pointer-events: none; }
+.mascote__confete span { position: absolute; left: 50%; top: 30%; width: 8px; height: 12px; background: hsl(calc(var(--i) * 26) 85% 55%); animation: confete 1.2s ease-out forwards; --a: calc(var(--i) * 25.7deg); }
+@keyframes mascote-respira { 50% { transform: scaleY(.98) translateY(2px); } }
+@keyframes mascote-pula { 50% { transform: translateY(-24px); } }
+@keyframes mascote-nao { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+@keyframes confete { to { transform: rotate(var(--a)) translateY(-160px) rotate(540deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .mascote *, .mascote__corpo { animation: none !important; transition: none !important; } }
+.login-marca { font-size: 2rem; font-weight: 800; color: #d71920; letter-spacing: -0.02em; line-height: 1; }
+.login-slogan { font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; color: rgb(255 255 255 / 0.6); }
