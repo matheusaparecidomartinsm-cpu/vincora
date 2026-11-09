@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { CategoryChips } from "@/components/ui/controls";
 import { ModelCard } from "@/components/ui/layout-parts";
 import { Page } from "@/components/ui/page";
-import { build, CATALOGO, CATEGORIAS, MODELS } from "@/lib/dieline/models";
+import { build, CATALOGO, CATEGORIAS, LINHAS, LINHAS_DO_MODELO, MODELS } from "@/lib/dieline/models";
 
 const PREVIEW_SPEC = { largura: 60, altura: 110, profundidade: 35, espessura: 0.345, sangria: false, areasCola: false };
 
@@ -16,12 +16,11 @@ export default function CatalogoPage() {
     return out;
   }, []);
 
-  const cats = useMemo(() => {
-    const presentes = [...new Set(CATALOGO.filter((m) => m.implementado).map((m) => m.categoria))];
-    return [{ value: "todos", label: "Todos" }, ...presentes.map((c) => ({ value: c, label: CATEGORIAS[c] }))];
-  }, []);
+  const cats = [{ value: "todos", label: "Todos" }, ...LINHAS];
 
-  const lista = CATALOGO.filter((m) => m.implementado && (cat === "todos" || m.categoria === cat));
+  const lista = CATALOGO.filter(
+    (m) => m.implementado && (cat === "todos" || (LINHAS_DO_MODELO[m.slug] ?? []).includes(cat as never)),
+  );
   const prontos = lista;
 
   return (
@@ -29,9 +28,9 @@ export default function CatalogoPage() {
       title="Que caixa vamos riscar hoje?"
       description="Escolha o modelo, digite as medidas internas e leve para a produção o PDF, o SVG e o DXF em tamanho real."
     >
-      <CategoryChips label="Filtrar por categoria" items={cats} active={cat} onChange={setCat} />
+      <CategoryChips label="Filtrar por linha" items={cats} active={cat} onChange={setCat} />
 
-      {lista.length === 0 && <p className="text-text-muted">Nenhum modelo nesta categoria.</p>}
+      {lista.length === 0 && <p className="text-text-muted">Ainda não há modelos nesta linha.</p>}
 
       {prontos.length > 0 && (
         <section aria-labelledby="h-prontos" className="flex flex-col gap-3">

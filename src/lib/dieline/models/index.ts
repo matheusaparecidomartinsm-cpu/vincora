@@ -73,6 +73,24 @@ export const CATALOGO: Pick<ModelMeta, "slug" | "nome" | "categoria" | "implemen
   { slug: "caixa-triangular", nome: "Caixa triangular", categoria: "especial", implementado: false },
 ];
 
+/** Linhas de produto da ProFood (as mesmas pastas de artes). Cada modelo pode estar em várias. */
+export const LINHAS = [
+  { value: "copos-potes", label: "Copos e potes" },
+  { value: "fast-food", label: "Fast Food" },
+  { value: "kit-genericas", label: "Kit Genéricas" },
+  { value: "oriental", label: "Oriental" },
+  { value: "panificacao", label: "Panificação" },
+  { value: "revenda", label: "Revenda" },
+  { value: "supermercado", label: "Supermercado" },
+  { value: "table-dinner", label: "Table Dinner" },
+] as const;
+export type Linha = (typeof LINHAS)[number]["value"];
+
+/** Em quais linhas cada modelo aparece. Modelo fora desta lista só aparece em "Todos". */
+export const LINHAS_DO_MODELO: Record<string, Linha[]> = {
+  "fundo-cartucho": [],
+};
+
 export const CATEGORIAS: Record<ModelMeta["categoria"], string> = {
   caixa: "Caixas",
   display: "Displays",
