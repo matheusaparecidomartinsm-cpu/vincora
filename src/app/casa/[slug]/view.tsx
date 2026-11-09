@@ -97,10 +97,15 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
     }
   }
 
+  const plana = f.altura === 0;
   const linhas: [string, string][] = [
-    ["Medidas internas (fundo)", `${mm(f.largura)} × ${mm(f.profundidade)} mm`],
-    ["Boca (topo)", `${mm(f.topo.largura)} × ${mm(f.topo.profundidade)} mm`],
-    ["Altura da parede", `${mm(f.altura)} mm`],
+    ...(plana
+      ? ([["Tamanho", `${mm(f.largura)} × ${mm(f.profundidade)} mm`]] as [string, string][])
+      : ([
+          ["Medidas internas (fundo)", `${mm(f.largura)} × ${mm(f.profundidade)} mm`],
+          ["Boca (topo)", `${mm(f.topo.largura)} × ${mm(f.topo.profundidade)} mm`],
+          ["Altura da parede", `${mm(f.altura)} mm`],
+        ] as [string, string][])),
     ["Faca aberta", `${mm(f.aberta.w)} × ${mm(f.aberta.h)} mm`],
     ["Produto", f.produto],
     ["Faca", f.faca ?? "—"],

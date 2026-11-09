@@ -1,3 +1,4 @@
+import selada from "./selada.json";
 import tableDinner from "./table-dinner.json";
 import type { Linha } from "@/lib/dieline/models";
 
@@ -24,6 +25,6 @@ export type FacaCasa = {
   pdf: { pagina: [number, number]; origem: [number, number] };
 };
 
-export const FACAS_CASA = tableDinner as FacaCasa[];
+export const FACAS_CASA = [...tableDinner, ...selada] as FacaCasa[];
 export const facaCasa = (slug: string) => FACAS_CASA.find((f) => f.slug === slug);
 export const mm = (v: number) => v.toLocaleString("pt-BR", { maximumFractionDigits: 1 });

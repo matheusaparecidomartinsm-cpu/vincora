@@ -1,0 +1,436 @@
+[
+ {
+  "slug": "selada-base-extra-mini",
+  "nome": "Base selada Extra Mini",
+  "produto": null,
+  "faca": "T-000",
+  "fb": null,
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 75.0,
+  "profundidade": 75.0,
+  "altura": 35.0,
+  "aberta": {
+   "w": 161.0,
+   "h": 161.0
+  },
+  "topo": {
+   "largura": 87.3,
+   "profundidade": 87.3,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    187.16,
+    202.05
+   ],
+   "origem": [
+    12.95,
+    12.22
+   ]
+  }
+ },
+ {
+  "slug": "selada-base-mini",
+  "nome": "Base selada Mini",
+  "produto": "6301",
+  "faca": "T-484",
+  "fb": "FB-1926",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 90.4,
+  "profundidade": 90.3,
+  "altura": 69.0,
+  "aberta": {
+   "w": 228.9,
+   "h": 228.3
+  },
+  "topo": {
+   "largura": 113.9,
+   "profundidade": 134.2,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    261.0,
+    279.02
+   ],
+   "origem": [
+    16.06,
+    16.06
+   ]
+  }
+ },
+ {
+  "slug": "selada-base-mini-slim",
+  "nome": "Base selada Mini Slim",
+  "produto": null,
+  "faca": "T-880",
+  "fb": "FB-2428",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 97.1,
+  "profundidade": 97.1,
+  "altura": 50.0,
+  "aberta": {
+   "w": 197.6,
+   "h": 197.1
+  },
+  "topo": {
+   "largura": 113.9,
+   "profundidade": 131.2,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    229.2,
+    250.37
+   ],
+   "origem": [
+    16.06,
+    16.56
+   ]
+  }
+ },
+ {
+  "slug": "selada-base-p",
+  "nome": "Base selada P",
+  "produto": "6302",
+  "faca": "T-485",
+  "fb": "FB-1891",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 150.4,
+  "profundidade": 105.3,
+  "altura": 69.0,
+  "aberta": {
+   "w": 288.9,
+   "h": 243.3
+  },
+  "topo": {
+   "largura": 173.9,
+   "profundidade": 149.2,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    321.0,
+    293.24
+   ],
+   "origem": [
+    16.06,
+    16.06
+   ]
+  }
+ },
+ {
+  "slug": "selada-base-p-slim",
+  "nome": "Base selada P Slim",
+  "produto": "6306",
+  "faca": "T-481",
+  "fb": "FB-1965",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 157.1,
+  "profundidade": 112.0,
+  "altura": 40.0,
+  "aberta": {
+   "w": 257.6,
+   "h": 212.0
+  },
+  "topo": {
+   "largura": 171.2,
+   "profundidade": 126.2,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    282.69,
+    269.17
+   ],
+   "origem": [
+    12.56,
+    16.11
+   ]
+  }
+ },
+ {
+  "slug": "selada-base-m",
+  "nome": "Base selada M",
+  "produto": "6303",
+  "faca": "T-538",
+  "fb": "FB-1909",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 249.3,
+  "profundidade": 149.2,
+  "altura": 69.0,
+  "aberta": {
+   "w": 387.8,
+   "h": 287.2
+  },
+  "topo": {
+   "largura": 272.9,
+   "profundidade": 193.1,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    419.94,
+    335.8
+   ],
+   "origem": [
+    16.06,
+    16.06
+   ]
+  }
+ },
+ {
+  "slug": "selada-base-m-slim",
+  "nome": "Base selada M Slim",
+  "produto": null,
+  "faca": "T-482",
+  "fb": null,
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 256.0,
+  "profundidade": 155.9,
+  "altura": 49.0,
+  "aberta": {
+   "w": 356.5,
+   "h": 253.9
+  },
+  "topo": {
+   "largura": 272.7,
+   "profundidade": 193.1,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    415.24,
+    335.45
+   ],
+   "origem": [
+    36.7,
+    47.76
+   ]
+  }
+ },
+ {
+  "slug": "selada-base-g",
+  "nome": "Base selada G",
+  "produto": "6304",
+  "faca": "T-338",
+  "fb": "FB-1869",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 300.5,
+  "profundidade": 175.0,
+  "altura": 69.0,
+  "aberta": {
+   "w": 436.3,
+   "h": 313.0
+  },
+  "topo": {
+   "largura": 327.7,
+   "profundidade": 229.0,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    454.05,
+    364.84
+   ],
+   "origem": [
+    8.87,
+    10.54
+   ]
+  }
+ },
+ {
+  "slug": "selada-base-2l",
+  "nome": "Base selada 2L",
+  "produto": null,
+  "faca": null,
+  "fb": null,
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 250.0,
+  "profundidade": 150.0,
+  "altura": 57.0,
+  "aberta": {
+   "w": 388.3,
+   "h": 288.0
+  },
+  "topo": {
+   "largura": 270.1,
+   "profundidade": 170.1,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    427.12,
+    340.98
+   ],
+   "origem": [
+    17.93,
+    18.5
+   ]
+  }
+ },
+ {
+  "slug": "selada-tampa-mini",
+  "nome": "Tampa selada Mini",
+  "produto": "6201",
+  "faca": "T-203",
+  "fb": "FB-1827",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 135.2,
+  "profundidade": 143.2,
+  "altura": 0,
+  "aberta": {
+   "w": 135.2,
+   "h": 143.2
+  },
+  "topo": {
+   "largura": 135.2,
+   "profundidade": 143.2,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    247.11,
+    192.65
+   ],
+   "origem": [
+    55.96,
+    16.06
+   ]
+  }
+ },
+ {
+  "slug": "selada-tampa-p",
+  "nome": "Tampa selada P",
+  "produto": "6202",
+  "faca": "T-204",
+  "fb": "FB-1598",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 195.2,
+  "profundidade": 158.2,
+  "altura": 0,
+  "aberta": {
+   "w": 195.2,
+   "h": 158.2
+  },
+  "topo": {
+   "largura": 195.2,
+   "profundidade": 158.2,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    241.5,
+    207.05
+   ],
+   "origem": [
+    23.16,
+    16.06
+   ]
+  }
+ },
+ {
+  "slug": "selada-tampa-p-slim",
+  "nome": "Tampa selada P Slim",
+  "produto": "6202",
+  "faca": "T-204",
+  "fb": "FB-1598",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 195.2,
+  "profundidade": 158.2,
+  "altura": 0,
+  "aberta": {
+   "w": 195.2,
+   "h": 158.2
+  },
+  "topo": {
+   "largura": 195.2,
+   "profundidade": 158.2,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    241.5,
+    207.05
+   ],
+   "origem": [
+    23.16,
+    16.06
+   ]
+  }
+ },
+ {
+  "slug": "selada-tampa-m",
+  "nome": "Tampa selada M",
+  "produto": "6203",
+  "faca": "T-205",
+  "fb": "FB-1721",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 294.1,
+  "profundidade": 202.1,
+  "altura": 0,
+  "aberta": {
+   "w": 294.1,
+   "h": 202.1
+  },
+  "topo": {
+   "largura": 294.1,
+   "profundidade": 202.1,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    326.25,
+    251.28
+   ],
+   "origem": [
+    16.06,
+    16.06
+   ]
+  }
+ },
+ {
+  "slug": "selada-tampa-g",
+  "nome": "Tampa selada G",
+  "produto": "6204",
+  "faca": "T-206",
+  "fb": "FB-1673",
+  "bl": null,
+  "linha": "table-dinner",
+  "largura": 344.1,
+  "profundidade": 227.1,
+  "altura": 0,
+  "aberta": {
+   "w": 344.1,
+   "h": 227.1
+  },
+  "topo": {
+   "largura": 344.1,
+   "profundidade": 227.1,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    376.25,
+    279.03
+   ],
+   "origem": [
+    16.06,
+    16.06
+   ]
+  }
+ }
+]

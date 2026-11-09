@@ -89,6 +89,9 @@ export function montarFaces(faces: FaceDobra[], mat?: { papel: THREE.Material; b
       juntas.push({ g: junta, eixo, f });
     }
   });
+  // raiz com ângulo = peça plana virada (ex.: tampa, com a arte para cima)
+  const r0 = faces.find((f) => f.pai == null);
+  if (r0?.angulo) raiz.rotation.x = THREE.MathUtils.degToRad(r0.angulo);
   const aplicar = (progresso: number) => {
     for (const { g, eixo, f } of juntas) g.quaternion.setFromAxisAngle(eixo, THREE.MathUtils.degToRad(f.angulo * fracaoEtapa(progresso, f.etapa)));
     raiz.updateMatrixWorld(true);

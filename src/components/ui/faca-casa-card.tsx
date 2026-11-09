@@ -16,7 +16,8 @@ export function FacaCasaCard({ f }: { f: FacaCasa }) {
         <div>
           <p className="text-md font-semibold text-text">{f.nome}</p>
           <p className="text-xs text-text-muted">
-            {mm(f.largura)} × {mm(f.profundidade)} × {mm(f.altura)} mm
+            {mm(f.largura)} × {mm(f.profundidade)}
+            {f.altura > 0 && <> × {mm(f.altura)}</>} mm
           </p>
           <p className="mt-1 flex flex-wrap gap-x-2 font-mono text-xs text-text-subtle">
             {[f.produto, f.faca, f.fb, f.bl].filter(Boolean).map((c) => (
