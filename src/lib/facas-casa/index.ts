@@ -20,6 +20,8 @@ export type FacaCasa = {
   aberta: { w: number; h: number };
   /** boca da bandeja (dobradiça da tampa × profundidade da tampa) e altura da lingueta, em mm */
   topo: { largura: number; profundidade: number; lingueta: number };
+  /** página do PDF da arte (mm) e canto da faca dentro dela — para encaixar a arte do cliente */
+  pdf: { pagina: [number, number]; origem: [number, number] };
 };
 
 export const FACAS_CASA = tableDinner as FacaCasa[];

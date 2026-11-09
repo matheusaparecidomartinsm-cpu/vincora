@@ -31,7 +31,20 @@ const ACABAMENTOS: { value: Exclude<Acabamento, null>; label: string; cor: strin
   { value: "ecokraft", label: "Ecokraft", cor: "#b98f5f" },
 ];
 
-export function Box3D({ spec, label, acabamento: doMaterial = null, faces = null }: { spec: Spec | null; label: string; acabamento?: Acabamento; faces?: FaceDobra[] | null }) {
+export function Box3D({
+  spec,
+  label,
+  acabamento: doMaterial = null,
+  faces = null,
+  arte = null,
+}: {
+  spec: Spec | null;
+  label: string;
+  acabamento?: Acabamento;
+  faces?: FaceDobra[] | null;
+  /** arte do lado de fora: imagem recortada no retângulo da faca (w × h em mm) */
+  arte?: { src: string; w: number; h: number } | null;
+}) {
   const [escolhido, setEscolhido] = useState<Acabamento>(null);
   // segue o material escolhido no painel; os botões do 3D trocam só a visualização
   useEffect(() => setEscolhido(null), [doMaterial]);
@@ -94,7 +107,17 @@ export function Box3D({ spec, label, acabamento: doMaterial = null, faces = null
         textura.colorSpace = THREE.SRGBColorSpace;
         papel.map = textura;
       }
-      const m = faces ? montarFaces(faces, { papel, borda }) : montar(fn!(spec), { papel, borda });
+      let arteMat: InstanceType<typeof THREE.MeshLambertMaterial> | undefined;
+      if (faces && arte) {
+        const tx = new THREE.TextureLoader().load(arte.src, () => engine.current?.setView(atual.yaw, atual.pitch, atual.zoom));
+        tx.colorSpace = THREE.SRGBColorSpace;
+        tx.repeat.set(1 / arte.w, -1 / arte.h); // UV em mm, y da faca para baixo
+        tx.offset.set(0, 1);
+        tx.anisotropy = 4;
+        arteMat = new THREE.MeshLambertMaterial({ map: tx, side: THREE.BackSide });
+        papel.side = THREE.FrontSide;
+      }
+      const m = faces ? montarFaces(faces, { papel, borda, arte: arteMat }) : montar(fn!(spec), { papel, borda });
       const pivo = new THREE.Group();
       pivo.add(m.raiz);
       scene.add(pivo);
@@ -149,6 +172,8 @@ export function Box3D({ spec, label, acabamento: doMaterial = null, faces = null
           m.dispose();
           papel.dispose();
           textura?.dispose();
+          arteMat?.map?.dispose();
+          arteMat?.dispose();
           borda.dispose();
           renderer.dispose();
           renderer.domElement.remove();
@@ -164,7 +189,7 @@ export function Box3D({ spec, label, acabamento: doMaterial = null, faces = null
     };
     // a cena depende só da spec
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [specKey, acabamento, faces]);
+  }, [specKey, acabamento, faces, arte?.src]);
 
   useEffect(() => engine.current?.setFold(fold / 100), [fold, estado]);
   useEffect(() => engine.current?.setView(vista.yaw, vista.pitch, vista.zoom), [vista, estado]);

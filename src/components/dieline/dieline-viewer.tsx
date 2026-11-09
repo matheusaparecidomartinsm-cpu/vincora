@@ -17,7 +17,10 @@ export function DielineViewer({
   invalid,
   thumbnail,
   emptyText = "Informe as medidas para ver a faca.",
+  arte,
 }: {
+  /** imagem da arte (data URL ou caminho), recortada no retângulo da faca */
+  arte?: string | null;
   dieline: Dieline | null;
   label: string;
   invalid?: boolean;
@@ -89,6 +92,7 @@ export function DielineViewer({
           <rect x={-5000} y={-5000} width={12000} height={12000} fill="url(#grade10)" />
         </>
       )}
+      {arte && <image href={arte} x={bbox.minX} y={bbox.minY} width={bbox.w} height={bbox.h} preserveAspectRatio="none" />}
       {glue.map((g, i) => (
         <path key={`g${i}`} d={polyToD(g)} fill="var(--c-glue-fill)" opacity={0.7} />
       ))}

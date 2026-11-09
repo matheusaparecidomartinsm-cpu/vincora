@@ -1,11 +1,11 @@
 "use client";
-import { Download } from "lucide-react";
+import { Download, ImagePlus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Box3D, acabamentoDoMaterial } from "@/components/dieline/box-3d";
 import { DielineViewer } from "@/components/dieline/dieline-viewer";
 import { Button } from "@/components/ui/button";
-import { Select, ViewTabs } from "@/components/ui/controls";
+import { Select, Switch, ViewTabs } from "@/components/ui/controls";
 import { Alert } from "@/components/ui/feedback";
 import { data, type Material } from "@/lib/data";
 import { LINHAS } from "@/lib/dieline/models";
@@ -15,6 +15,7 @@ import { toSVG } from "@/lib/dieline/render/svg";
 import type { FaceDobra } from "@/lib/dieline/fold3d-three";
 import type { Dieline } from "@/lib/dieline/types";
 import { mm, type FacaCasa } from "@/lib/facas-casa";
+import { carregarArte } from "@/lib/facas-casa/arte";
 
 function baixar(data: BlobPart, tipo: string, nome: string) {
   const url = URL.createObjectURL(new Blob([data], { type: tipo }));
@@ -29,6 +30,26 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
   const [dl, setDl] = useState<Dieline | null>(null);
   const [erro, setErro] = useState(false);
   const [faces, setFaces] = useState<FaceDobra[] | null>(null);
+  const padrao = `/facas-casa/${f.slug}.arte.jpg`;
+  const [arteCliente, setArteCliente] = useState<{ src: string; nome: string } | null>(null);
+  const [verArte, setVerArte] = useState(true);
+  const [lendo, setLendo] = useState(false);
+  const [erroArte, setErroArte] = useState<string | null>(null);
+  const arteSrc = verArte ? (arteCliente?.src ?? padrao) : null;
+
+  async function onArquivo(file: File | undefined) {
+    if (!file) return;
+    setLendo(true);
+    setErroArte(null);
+    try {
+      setArteCliente({ src: await carregarArte(file, f), nome: file.name });
+      setVerArte(true);
+    } catch {
+      setErroArte("Não foi possível ler este arquivo. Use PDF, PNG ou JPG.");
+    } finally {
+      setLendo(false);
+    }
+  }
   const [gerando, setGerando] = useState(false);
   const [materials, setMaterials] = useState<Material[]>([]);
   const [materialId, setMaterialId] = useState("");
@@ -116,6 +137,24 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
             options={materials.map((m) => ({ value: m.id, label: m.nome, hint: `${m.espessuraMm.toLocaleString("pt-BR")} mm` }))}
           />
         )}
+        <div className="flex flex-col gap-3 rounded-md border border-border p-3">
+          <Switch label="Mostrar arte" checked={verArte} onCheckedChange={setVerArte} />
+          <p className="text-xs text-text-muted">
+            {arteCliente ? `Arte do cliente: ${arteCliente.nome}` : "Arte padrão ProFood"}
+          </p>
+          <label className="flex h-control-md cursor-pointer items-center justify-center gap-2 rounded-md border border-border-strong text-sm font-semibold text-text hover:bg-surface-sunken">
+            <ImagePlus size={16} aria-hidden />
+            {lendo ? "Lendo a arte…" : "Carregar arte do cliente"}
+            <input type="file" accept="application/pdf,image/png,image/jpeg" className="sr-only" onChange={(e) => onArquivo(e.target.files?.[0])} />
+          </label>
+          {arteCliente && (
+            <button type="button" className="text-left text-xs text-accent underline" onClick={() => setArteCliente(null)}>
+              Voltar para a arte padrão
+            </button>
+          )}
+          {erroArte && <p className="text-xs text-danger">{erroArte}</p>}
+          <p className="text-xs text-text-subtle">PDF no mesmo modelo da arte encaixa sozinho. Imagem (PNG/JPG) deve ser só a área da faca.</p>
+        </div>
         <div className="flex flex-col gap-2">
           <Button onClick={pdf} loading={gerando} disabled={!dl}>
             <Download size={16} aria-hidden /> Baixar PDF 1:1
@@ -137,7 +176,7 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
             {
               value: "2d",
               label: "Faca 2D",
-              content: erro ? <Alert tone="danger" title="Não foi possível carregar a faca." /> : <DielineViewer dieline={dl} label={`Faca ${f.nome}`} emptyText="Carregando a faca…" />,
+              content: erro ? <Alert tone="danger" title="Não foi possível carregar a faca." /> : <DielineViewer dieline={dl} label={`Faca ${f.nome}`} emptyText="Carregando a faca…" arte={arteSrc} />,
             },
             {
               value: "3d",
@@ -148,6 +187,7 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
                   label={f.nome}
                   acabamento={acabamentoDoMaterial(material?.nome)}
                   faces={faces}
+                  arte={arteSrc ? { src: arteSrc, w: f.aberta.w, h: f.aberta.h } : null}
                 />
               ),
             },

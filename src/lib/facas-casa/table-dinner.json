@@ -18,6 +18,16 @@
    "largura": 113.8,
    "profundidade": 115.3,
    "lingueta": 10.0
+  },
+  "pdf": {
+   "pagina": [
+    291.15,
+    418.54
+   ],
+   "origem": [
+    16.08,
+    16.07
+   ]
   }
  },
  {
@@ -39,6 +49,16 @@
    "largura": 113.8,
    "profundidade": 115.3,
    "lingueta": 10.0
+  },
+  "pdf": {
+   "pagina": [
+    291.15,
+    424.85
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -60,6 +80,16 @@
    "largura": 111.2,
    "profundidade": 112.6,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    249.2,
+    370.48
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -81,6 +111,16 @@
    "largura": 111.2,
    "profundidade": 112.6,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    249.2,
+    375.75
+   ],
+   "origem": [
+    16.08,
+    16.07
+   ]
   }
  },
  {
@@ -102,6 +142,16 @@
    "largura": 173.6,
    "profundidade": 130.1,
    "lingueta": 12.0
+  },
+  "pdf": {
+   "pagina": [
+    356.15,
+    456.47
+   ],
+   "origem": [
+    16.07,
+    16.08
+   ]
   }
  },
  {
@@ -123,6 +173,16 @@
    "largura": 173.6,
    "profundidade": 130.1,
    "lingueta": 12.0
+  },
+  "pdf": {
+   "pagina": [
+    356.15,
+    456.47
+   ],
+   "origem": [
+    16.07,
+    16.08
+   ]
   }
  },
  {
@@ -144,6 +204,16 @@
    "largura": 171.2,
    "profundidade": 127.7,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    309.2,
+    402.67
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -165,6 +235,16 @@
    "largura": 171.2,
    "profundidade": 127.7,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    309.2,
+    402.67
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -186,6 +266,16 @@
    "largura": 218.6,
    "profundidade": 165.1,
    "lingueta": 12.0
+  },
+  "pdf": {
+   "pagina": [
+    401.15,
+    523.57
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -207,6 +297,16 @@
    "largura": 218.6,
    "profundidade": 165.1,
    "lingueta": 12.0
+  },
+  "pdf": {
+   "pagina": [
+    401.15,
+    522.01
+   ],
+   "origem": [
+    16.08,
+    16.07
+   ]
   }
  },
  {
@@ -228,6 +328,16 @@
    "largura": 209.1,
    "profundidade": 155.6,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    347.15,
+    457.24
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -249,6 +359,16 @@
    "largura": 209.1,
    "profundidade": 155.6,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    347.15,
+    464.99
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -270,6 +390,16 @@
    "largura": 278.6,
    "profundidade": 166.5,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    482.15,
+    534.33
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -291,6 +421,16 @@
    "largura": 278.6,
    "profundidade": 166.5,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    482.15,
+    534.33
+   ],
+   "origem": [
+    16.08,
+    16.08
+   ]
   }
  },
  {
@@ -312,6 +452,16 @@
    "largura": 270.1,
    "profundidade": 171.6,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    418.36,
+    504.61
+   ],
+   "origem": [
+    21.18,
+    18.62
+   ]
   }
  },
  {
@@ -333,6 +483,16 @@
    "largura": 270.1,
    "profundidade": 171.6,
    "lingueta": 13.0
+  },
+  "pdf": {
+   "pagina": [
+    418.36,
+    504.61
+   ],
+   "origem": [
+    21.18,
+    18.62
+   ]
   }
  }
 ]
