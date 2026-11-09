@@ -186,7 +186,11 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
             {
               value: "3d",
               label: "Caixa 3D",
-              content: (
+              content: f.sem3d ? (
+                <div className="flex h-full items-center justify-center p-6 text-center text-sm text-text-muted">
+                  A montagem 3D desta faca ainda está em desenvolvimento. A faca 2D, a arte e os arquivos já estão certos.
+                </div>
+              ) : (
                 <Box3D
                   spec={{ model: f.slug, largura: f.largura, altura: f.altura, profundidade: f.profundidade, espessura: material?.espessuraMm ?? 0.4, sangria: false, areasCola: false, topo: f.topo }}
                   label={f.nome}

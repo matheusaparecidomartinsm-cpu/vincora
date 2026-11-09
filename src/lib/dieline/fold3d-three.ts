@@ -49,7 +49,7 @@ export function montar(no: FoldNode, mat?: { papel: THREE.Material; borda: THREE
  * coordenadas da faca: x para a direita, y para baixo). Cada face gira na sua dobra (segmento
  * do vinco) em relação à face-mãe. Ângulo positivo = dobra para o lado de dentro da embalagem.
  */
-export type FaceDobra = { poly: [number, number][]; pai: number | null; dobra: [[number, number], [number, number]] | null; angulo: number; etapa: number };
+export type FaceDobra = { poly: [number, number][]; furos?: [number, number][][]; pai: number | null; dobra: [[number, number], [number, number]] | null; angulo: number; etapa: number };
 
 export function montarFaces(faces: FaceDobra[], mat?: { papel: THREE.Material; borda: THREE.LineBasicMaterial; arte?: THREE.Material }): Montada {
   const geos: THREE.BufferGeometry[] = [];
@@ -65,6 +65,7 @@ export function montarFaces(faces: FaceDobra[], mat?: { papel: THREE.Material; b
     junta.position.set(p[0], 0, -p[1]);
     conteudo.position.set(-p[0], 0, p[1]);
     const shape = new THREE.Shape(f.poly.map(([x, y]) => new THREE.Vector2(x, y)));
+    for (const furo of f.furos ?? []) shape.holes.push(new THREE.Path(furo.map(([x, y]) => new THREE.Vector2(x, y))));
     // (x, y) da faca → (x, 0, -y): a face impressa fica para fora (lado de baixo antes de dobrar)
     const geo = new THREE.ShapeGeometry(shape).rotateX(-Math.PI / 2);
     geos.push(geo);

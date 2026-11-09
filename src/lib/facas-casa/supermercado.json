@@ -1,0 +1,349 @@
+[
+ {
+  "slug": "pizza-tampa-15",
+  "nome": "Tampa de pizza 15 cm",
+  "produto": "5101",
+  "faca": "T-549",
+  "fb": "FB-0149",
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 151.0,
+  "profundidade": 151.0,
+  "altura": 20.0,
+  "aberta": {
+   "w": 191.3,
+   "h": 211.0
+  },
+  "topo": {
+   "largura": 62.5,
+   "profundidade": 62.5,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    226.6,
+    261.44
+   ],
+   "origem": [
+    17.66,
+    16.06
+   ]
+  }
+ },
+ {
+  "slug": "pizza-tampa-19",
+  "nome": "Tampa de pizza 19 cm",
+  "produto": "5102",
+  "faca": "T-1328A",
+  "fb": "FB-1388",
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 197.0,
+  "profundidade": 197.0,
+  "altura": 21.0,
+  "aberta": {
+   "w": 257.0,
+   "h": 257.0
+  },
+  "topo": {
+   "largura": 81.6,
+   "profundidade": 81.6,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    289.13,
+    304.88
+   ],
+   "origem": [
+    16.05,
+    16.05
+   ]
+  }
+ },
+ {
+  "slug": "pizza-tampa-25",
+  "nome": "Tampa de pizza 25 cm",
+  "produto": "5106",
+  "faca": "T-641",
+  "fb": "FB-2148",
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 256.0,
+  "profundidade": 256.0,
+  "altura": 20.0,
+  "aberta": {
+   "w": 296.3,
+   "h": 296.3
+  },
+  "topo": {
+   "largura": 106.0,
+   "profundidade": 106.0,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    328.15,
+    349.29
+   ],
+   "origem": [
+    15.93,
+    15.93
+   ]
+  }
+ },
+ {
+  "slug": "pizza-tampa-30",
+  "nome": "Tampa de pizza 30 cm",
+  "produto": "5104",
+  "faca": "T-371",
+  "fb": "FB-1794",
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 305.0,
+  "profundidade": 305.0,
+  "altura": 19.0,
+  "aberta": {
+   "w": 343.3,
+   "h": 343.3
+  },
+  "topo": {
+   "largura": 126.3,
+   "profundidade": 126.3,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    375.15,
+    393.23
+   ],
+   "origem": [
+    15.94,
+    15.94
+   ]
+  }
+ },
+ {
+  "slug": "pizza-tampa-35",
+  "nome": "Tampa de pizza 35 cm",
+  "produto": "5105",
+  "faca": "T-909",
+  "fb": "FB-0444",
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 352.0,
+  "profundidade": 352.0,
+  "altura": 22.0,
+  "aberta": {
+   "w": 396.2,
+   "h": 396.2
+  },
+  "topo": {
+   "largura": 145.8,
+   "profundidade": 145.8,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    428.15,
+    449.66
+   ],
+   "origem": [
+    15.97,
+    15.97
+   ]
+  }
+ },
+ {
+  "slug": "pizza-tampa-delivery-35",
+  "nome": "Tampa de pizza delivery 35 cm",
+  "produto": null,
+  "faca": null,
+  "fb": "FB-1743",
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 360.0,
+  "profundidade": 360.0,
+  "altura": 25.6,
+  "aberta": {
+   "w": 360.1,
+   "h": 360.1
+  },
+  "topo": {
+   "largura": 25.6,
+   "profundidade": 360.0,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    491.09,
+    509.26
+   ],
+   "origem": [
+    65.55,
+    66.17
+   ]
+  },
+  "sem3d": true
+ },
+ {
+  "slug": "baguete-p",
+  "nome": "Baguete P",
+  "produto": null,
+  "faca": "T-0844",
+  "fb": null,
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 220.1,
+  "profundidade": 70.0,
+  "altura": 12.0,
+  "aberta": {
+   "w": 351.7,
+   "h": 261.9
+  },
+  "topo": {
+   "largura": 219.1,
+   "profundidade": 70.0,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    383.69,
+    310.19
+   ],
+   "origem": [
+    15.98,
+    15.93
+   ]
+  },
+  "sem3d": true
+ },
+ {
+  "slug": "baguete-m",
+  "nome": "Baguete M",
+  "produto": null,
+  "faca": "T-0845",
+  "fb": null,
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 270.0,
+  "profundidade": 148.5,
+  "altura": 12.0,
+  "aberta": {
+   "w": 412.0,
+   "h": 308.9
+  },
+  "topo": {
+   "largura": 269.0,
+   "profundidade": 88.5,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    443.94,
+    357.19
+   ],
+   "origem": [
+    15.98,
+    15.93
+   ]
+  },
+  "sem3d": true
+ },
+ {
+  "slug": "baguete-pa",
+  "nome": "Baguete Pa",
+  "produto": null,
+  "faca": "D1096-1",
+  "fb": null,
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 220.1,
+  "profundidade": 70.0,
+  "altura": 12.0,
+  "aberta": {
+   "w": 351.7,
+   "h": 261.9
+  },
+  "topo": {
+   "largura": 219.1,
+   "profundidade": 70.0,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    383.69,
+    310.19
+   ],
+   "origem": [
+    15.98,
+    15.93
+   ]
+  },
+  "sem3d": true
+ },
+ {
+  "slug": "baguete-ma",
+  "nome": "Baguete Ma",
+  "produto": null,
+  "faca": "D1096-2",
+  "fb": null,
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 270.0,
+  "profundidade": 148.5,
+  "altura": 12.0,
+  "aberta": {
+   "w": 412.0,
+   "h": 308.9
+  },
+  "topo": {
+   "largura": 269.0,
+   "profundidade": 88.5,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    443.94,
+    357.19
+   ],
+   "origem": [
+    15.98,
+    15.93
+   ]
+  },
+  "sem3d": true
+ },
+ {
+  "slug": "sanduiche-triangular-g",
+  "nome": "Sanduíche triangular G",
+  "produto": null,
+  "faca": "D799-1",
+  "fb": null,
+  "bl": null,
+  "linha": "supermercado",
+  "largura": 134.8,
+  "profundidade": 134.8,
+  "altura": 56.0,
+  "aberta": {
+   "w": 209.7,
+   "h": 296.0
+  },
+  "topo": {
+   "largura": 78.9,
+   "profundidade": 134.8,
+   "lingueta": 0
+  },
+  "pdf": {
+   "pagina": [
+    247.82,
+    345.91
+   ],
+   "origem": [
+    19.06,
+    16.06
+   ]
+  },
+  "sem3d": true
+ }
+]
