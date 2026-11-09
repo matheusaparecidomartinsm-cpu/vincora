@@ -1,7 +1,7 @@
 "use client";
 import { Play, RotateCcw } from "lucide-react";
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent, type WheelEvent } from "react";
-import { FOLD_MODELS } from "@/lib/dieline/fold3d";
+import { foldDoModelo } from "@/lib/dieline/fold3d";
 import type { Spec } from "@/lib/dieline/types";
 
 type Engine = {
@@ -38,7 +38,7 @@ export function Box3D({ spec, label, acabamento = null }: { spec: Spec | null; l
   // (re)cria a cena quando a faca muda
   useEffect(() => {
     if (!spec || !host.current) return;
-    const fn = FOLD_MODELS[spec.model];
+    const fn = foldDoModelo(spec.model);
     if (!fn) {
       setEstado("sem-modelo");
       return;

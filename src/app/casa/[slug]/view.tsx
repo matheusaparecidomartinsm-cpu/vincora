@@ -2,9 +2,12 @@
 import { Download } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Box3D, acabamentoDoMaterial } from "@/components/dieline/box-3d";
 import { DielineViewer } from "@/components/dieline/dieline-viewer";
 import { Button } from "@/components/ui/button";
+import { Select, ViewTabs } from "@/components/ui/controls";
 import { Alert } from "@/components/ui/feedback";
+import { data, type Material } from "@/lib/data";
 import { LINHAS } from "@/lib/dieline/models";
 import { toDXF } from "@/lib/dieline/render/dxf";
 import { toPDF } from "@/lib/dieline/render/pdf";
@@ -25,6 +28,19 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
   const [dl, setDl] = useState<Dieline | null>(null);
   const [erro, setErro] = useState(false);
   const [gerando, setGerando] = useState(false);
+  const [materials, setMaterials] = useState<Material[]>([]);
+  const [materialId, setMaterialId] = useState("");
+
+  useEffect(() => {
+    data
+      .listMaterials()
+      .then((ms) => {
+        setMaterials(ms);
+        setMaterialId((atual) => atual || (ms.find((m) => /kraft/i.test(m.nome)) ?? ms[0])?.id || "");
+      })
+      .catch(() => setMaterials([]));
+  }, []);
+  const material = materials.find((m) => m.id === materialId);
 
   useEffect(() => {
     fetch(`/facas-casa/${f.slug}.json`)
@@ -85,6 +101,14 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
             </div>
           ))}
         </dl>
+        {materials.length > 0 && (
+          <Select
+            label="Material"
+            value={materialId}
+            onValueChange={setMaterialId}
+            options={materials.map((m) => ({ value: m.id, label: m.nome, hint: `${m.espessuraMm.toLocaleString("pt-BR")} mm` }))}
+          />
+        )}
         <div className="flex flex-col gap-2">
           <Button onClick={pdf} loading={gerando} disabled={!dl}>
             <Download size={16} aria-hidden /> Baixar PDF 1:1
@@ -99,8 +123,28 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
           </div>
         </div>
       </section>
-      <section className="min-h-[60vh] rounded-lg border border-border bg-surface p-3">
-        {erro ? <Alert tone="danger" title="Não foi possível carregar a faca." /> : <DielineViewer dieline={dl} label={`Faca ${f.nome}`} emptyText="Carregando a faca…" />}
+      <section aria-label="Visualização" className="h-[70vh] min-h-viewer-min-h lg:h-[calc(100vh-var(--l-header-h)-var(--l-gutter))]">
+        <ViewTabs
+          fill
+          tabs={[
+            {
+              value: "2d",
+              label: "Faca 2D",
+              content: erro ? <Alert tone="danger" title="Não foi possível carregar a faca." /> : <DielineViewer dieline={dl} label={`Faca ${f.nome}`} emptyText="Carregando a faca…" />,
+            },
+            {
+              value: "3d",
+              label: "Caixa 3D",
+              content: (
+                <Box3D
+                  spec={{ model: f.slug, largura: f.largura, altura: f.altura, profundidade: f.profundidade, espessura: material?.espessuraMm ?? 0.4, sangria: false, areasCola: false }}
+                  label={f.nome}
+                  acabamento={acabamentoDoMaterial(material?.nome)}
+                />
+              ),
+            },
+          ]}
+        />
       </section>
     </main>
   );

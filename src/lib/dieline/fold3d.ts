@@ -77,9 +77,37 @@ export function foldFundoCartucho(spec: Spec): FoldNode {
   ]);
 }
 
+/**
+ * Embalagem To Go (bandeja com tampa articulada): fundo L×P, quatro paredes de altura A,
+ * tampa presa na parede de trás e lingueta de fecho na frente da tampa.
+ * Representação simplificada: os cantos sanfonados das artes não entram no 3D.
+ */
+export function foldToGo(spec: Spec): FoldNode {
+  const { largura: L, altura: A, profundidade: P } = spec;
+  const lg = Math.min(25, A * 0.5);
+  const no = (nome: string, poly: [number, number][], origem: [number, number], eixo: FoldNode["eixo"], angulo: number, etapa: number, filhos: FoldNode[] = []): FoldNode => ({
+    nome, poly, origem, eixo, angulo, etapa, filhos,
+  });
+  // raiz = parede de trás (em pé), como o corpo do fundo cartucho
+  return no("parede de trás", rect(L, A), [0, 0], null, 0, 0, [
+    no("fundo", [[0, 0], [L, 0], [L, -P], [0, -P]], [0, 0], "x", 90, 0, [
+      no("parede da frente", [[0, 0], [L, 0], [L, -A], [0, -A]], [0, -P], "x", 90, 1),
+      no("parede esquerda", [[0, 0], [-A, 0], [-A, -P], [0, -P]], [0, 0], "y", -90, 1),
+      no("parede direita", [[0, 0], [A, 0], [A, -P], [0, -P]], [L, 0], "y", 90, 1),
+    ]),
+    no("tampa", rect(L, P), [0, A], "x", -90, 2, [
+      no("lingueta", rect(L, lg), [0, P], "x", -90, 3),
+    ]),
+  ]);
+}
+
 export const FOLD_MODELS: Record<string, (s: Spec) => FoldNode> = {
   "fundo-cartucho": foldFundoCartucho,
+  "to-go": foldToGo,
 };
+
+/** Modelo 3D de um slug: exato ou pelo prefixo (to-go-p-slim → to-go). */
+export const foldDoModelo = (slug: string) => FOLD_MODELS[slug] ?? FOLD_MODELS[Object.keys(FOLD_MODELS).find((k) => slug.startsWith(k + "-")) ?? ""];
 
 /** Fração de dobra de uma etapa, dado o progresso geral 0..1. */
 export function fracaoEtapa(progresso: number, etapa: number) {
