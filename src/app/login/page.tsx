@@ -14,7 +14,7 @@ export default function LoginPage() {
         <div className="flex flex-col items-center gap-3">
           <Mascote />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-profood-cor.png" alt="ProFood Embalagens" width={220} height={85} className="h-auto w-[220px]" />
+          <img src="/logo-profood-branco.png" alt="ProFood Embalagens" width={240} height={90} className="h-auto w-[240px]" />
         </div>
         <div className="w-full max-w-sm">
           <AuthShell
