@@ -35,7 +35,8 @@ export function montar(no: FoldNode, mat?: { papel: THREE.Material; borda: THREE
   const aplicar = (progresso: number) => {
     for (const { g, no: n } of juntas) {
       const a = THREE.MathUtils.degToRad(n.angulo * fracaoEtapa(progresso, n.etapa));
-      g.rotation.set(n.eixo === "x" ? a : 0, n.eixo === "y" ? a : 0, 0);
+      if (Array.isArray(n.eixo)) g.quaternion.setFromAxisAngle(new THREE.Vector3(n.eixo[0], n.eixo[1], 0).normalize(), a);
+      else g.rotation.set(n.eixo === "x" ? a : 0, n.eixo === "y" ? a : 0, 0);
     }
     raiz.updateMatrixWorld(true);
   };

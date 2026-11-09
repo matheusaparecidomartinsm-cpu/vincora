@@ -14,7 +14,8 @@ export type FoldNode = {
   poly: [number, number][];
   /** posição da dobradiça no referencial do pai */
   origem: [number, number];
-  eixo: "x" | "y" | null;
+  /** "x"/"y" = dobradiça reta nos eixos; [dx, dy] = dobradiça inclinada nessa direção */
+  eixo: "x" | "y" | [number, number] | null;
   /** ângulo totalmente dobrado, em graus */
   angulo: number;
   /** 0 corpo · 1 abas de pó · 2 tampas · 3 linguetas */
@@ -84,21 +85,29 @@ export function foldFundoCartucho(spec: Spec): FoldNode {
  */
 export function foldToGo(spec: Spec): FoldNode {
   const { largura: L, altura: A, profundidade: P } = spec;
-  const Lt = Math.max(L, spec.topo?.largura ?? L);
-  const Pt = Math.max(P, spec.topo?.profundidade ?? P);
+  // paredes a 100° do fundo (inclinação de 10°), salvo quando a boca medida da arte diz outra coisa
+  const abre = A * Math.sin((10 * Math.PI) / 180);
+  const Lt = Math.max(L, spec.topo?.largura ?? L + 2 * abre);
+  const Pt = Math.max(P, spec.topo?.profundidade ?? P + 2 * abre);
   const lg = spec.topo?.lingueta ?? Math.min(15, A * 0.3);
-  const dL = (Lt - L) / 2; // abertura de cada parede lateral, medida na horizontal
-  const dP = (Pt - P) / 2; // abertura da frente e de trás
+  const dL = (Lt - L) / 2;
+  const dP = (Pt - P) / 2;
   const grau = (r: number) => (r * 180) / Math.PI;
-  const tP = grau(Math.asin(Math.min(0.9, dP / A))); // inclinação da frente/trás
-  const tL = grau(Math.asin(Math.min(0.9, dL / A))); // inclinação das laterais
+  const tP = grau(Math.asin(Math.min(0.9, dP / A)));
+  const tL = grau(Math.asin(Math.min(0.9, dL / A)));
+  const g = Math.min(A * 0.45, Pt / 3); // largura do sanfonado no topo
   const no = (nome: string, poly: [number, number][], origem: [number, number], eixo: FoldNode["eixo"], angulo: number, etapa: number, filhos: FoldNode[] = []): FoldNode => ({
     nome, poly, origem, eixo, angulo, etapa, filhos,
   });
+  // sanfonados dos cantos: triângulos presos na parede longa, dobrados por fora da cabeceira
+  const sanf = (lado: 1 | -1, cima: 1 | -1, x0: number): FoldNode =>
+    no(`sanfonado ${lado > 0 ? "dir." : "esq."}`, [[0, 0], [lado * dL, cima * A], [lado * (dL + g), cima * A]], [x0, 0], [lado * dL, cima * A], lado * cima * 90, 2);
   // raiz = parede de trás; `angulo` da raiz endireita a caixa (a parede de trás é inclinada)
   return no("parede de trás", [[0, 0], [L, 0], [L + dL, A], [-dL, A]], [0, 0], null, tP, 0, [
+    sanf(1, 1, L),
+    sanf(-1, 1, 0),
     no("fundo", [[0, 0], [L, 0], [L, -P], [0, -P]], [0, 0], "x", 90 - tP, 0, [
-      no("parede da frente", [[0, 0], [L, 0], [L + dL, -A], [-dL, -A]], [0, -P], "x", 90 - tP, 1),
+      no("parede da frente", [[0, 0], [L, 0], [L + dL, -A], [-dL, -A]], [0, -P], "x", 90 - tP, 1, [sanf(1, -1, L), sanf(-1, -1, 0)]),
       no("parede esquerda", [[0, 0], [-A, dP], [-A, -P - dP], [0, -P]], [0, 0], "y", -(90 - tL), 1),
       no("parede direita", [[0, 0], [A, dP], [A, -P - dP], [0, -P]], [L, 0], "y", 90 - tL, 1),
     ]),
