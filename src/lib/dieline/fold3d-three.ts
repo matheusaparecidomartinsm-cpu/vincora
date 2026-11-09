@@ -30,6 +30,8 @@ export function montar(no: FoldNode, mat?: { papel: THREE.Material; borda: THREE
   }
 
   const raiz = build(no);
+  // raiz sem eixo pode ter uma inclinação fixa (ex.: bandeja com parede de trás inclinada)
+  if (!no.eixo && no.angulo) raiz.rotation.x = THREE.MathUtils.degToRad(no.angulo);
   const aplicar = (progresso: number) => {
     for (const { g, no: n } of juntas) {
       const a = THREE.MathUtils.degToRad(n.angulo * fracaoEtapa(progresso, n.etapa));

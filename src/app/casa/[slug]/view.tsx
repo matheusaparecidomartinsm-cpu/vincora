@@ -72,6 +72,7 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
 
   const linhas: [string, string][] = [
     ["Medidas internas (fundo)", `${mm(f.largura)} × ${mm(f.profundidade)} mm`],
+    ["Boca (topo)", `${mm(f.topo.largura)} × ${mm(f.topo.profundidade)} mm`],
     ["Altura da parede", `${mm(f.altura)} mm`],
     ["Faca aberta", `${mm(f.aberta.w)} × ${mm(f.aberta.h)} mm`],
     ["Produto", f.produto],
@@ -137,7 +138,7 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
               label: "Caixa 3D",
               content: (
                 <Box3D
-                  spec={{ model: f.slug, largura: f.largura, altura: f.altura, profundidade: f.profundidade, espessura: material?.espessuraMm ?? 0.4, sangria: false, areasCola: false }}
+                  spec={{ model: f.slug, largura: f.largura, altura: f.altura, profundidade: f.profundidade, espessura: material?.espessuraMm ?? 0.4, sangria: false, areasCola: false, topo: f.topo }}
                   label={f.nome}
                   acabamento={acabamentoDoMaterial(material?.nome)}
                 />

@@ -84,19 +84,26 @@ export function foldFundoCartucho(spec: Spec): FoldNode {
  */
 export function foldToGo(spec: Spec): FoldNode {
   const { largura: L, altura: A, profundidade: P } = spec;
-  const lg = Math.min(25, A * 0.5);
+  const Lt = Math.max(L, spec.topo?.largura ?? L);
+  const Pt = Math.max(P, spec.topo?.profundidade ?? P);
+  const lg = spec.topo?.lingueta ?? Math.min(15, A * 0.3);
+  const dL = (Lt - L) / 2; // abertura de cada parede lateral, medida na horizontal
+  const dP = (Pt - P) / 2; // abertura da frente e de trás
+  const grau = (r: number) => (r * 180) / Math.PI;
+  const tP = grau(Math.asin(Math.min(0.9, dP / A))); // inclinação da frente/trás
+  const tL = grau(Math.asin(Math.min(0.9, dL / A))); // inclinação das laterais
   const no = (nome: string, poly: [number, number][], origem: [number, number], eixo: FoldNode["eixo"], angulo: number, etapa: number, filhos: FoldNode[] = []): FoldNode => ({
     nome, poly, origem, eixo, angulo, etapa, filhos,
   });
-  // raiz = parede de trás (em pé), como o corpo do fundo cartucho
-  return no("parede de trás", rect(L, A), [0, 0], null, 0, 0, [
-    no("fundo", [[0, 0], [L, 0], [L, -P], [0, -P]], [0, 0], "x", 90, 0, [
-      no("parede da frente", [[0, 0], [L, 0], [L, -A], [0, -A]], [0, -P], "x", 90, 1),
-      no("parede esquerda", [[0, 0], [-A, 0], [-A, -P], [0, -P]], [0, 0], "y", -90, 1),
-      no("parede direita", [[0, 0], [A, 0], [A, -P], [0, -P]], [L, 0], "y", 90, 1),
+  // raiz = parede de trás; `angulo` da raiz endireita a caixa (a parede de trás é inclinada)
+  return no("parede de trás", [[0, 0], [L, 0], [L + dL, A], [-dL, A]], [0, 0], null, tP, 0, [
+    no("fundo", [[0, 0], [L, 0], [L, -P], [0, -P]], [0, 0], "x", 90 - tP, 0, [
+      no("parede da frente", [[0, 0], [L, 0], [L + dL, -A], [-dL, -A]], [0, -P], "x", 90 - tP, 1),
+      no("parede esquerda", [[0, 0], [-A, dP], [-A, -P - dP], [0, -P]], [0, 0], "y", -(90 - tL), 1),
+      no("parede direita", [[0, 0], [A, dP], [A, -P - dP], [0, -P]], [L, 0], "y", 90 - tL, 1),
     ]),
-    no("tampa", rect(L, P), [0, A], "x", -90, 2, [
-      no("lingueta", rect(L, lg), [0, P], "x", -90, 3),
+    no("tampa", rect(Lt, Pt), [-dL, A], "x", -(90 + tP), 2, [
+      no("lingueta", rect(Lt, lg), [0, Pt], "x", -(90 - tP), 3),
     ]),
   ]);
 }

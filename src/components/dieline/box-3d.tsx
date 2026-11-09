@@ -14,7 +14,7 @@ const VISTA0 = { yaw: -0.6, pitch: 0.35, zoom: 1 };
 const cssVar = (n: string) => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || "#cccccc";
 
 /** Caixa montada em 3D, gerada da mesma geometria da faca. three.js só carrega quando este componente aparece. */
-export type Acabamento = "black" | "ecokraft" | null;
+export type Acabamento = "branco" | "black" | "ecokraft" | null;
 
 /** Escolhe o acabamento visual a partir do nome do material. */
 export function acabamentoDoMaterial(nome?: string | null): Acabamento {
@@ -24,7 +24,19 @@ export function acabamentoDoMaterial(nome?: string | null): Acabamento {
   return null;
 }
 
-export function Box3D({ spec, label, acabamento = null }: { spec: Spec | null; label: string; acabamento?: Acabamento }) {
+const ACABAMENTOS: { value: Exclude<Acabamento, null>; label: string; cor: string }[] = [
+  { value: "branco", label: "Branco", cor: "#f4f4f2" },
+  { value: "black", label: "Black", cor: "#011622" },
+  { value: "ecokraft", label: "Ecokraft", cor: "#b98f5f" },
+];
+
+export function Box3D({ spec, label, acabamento: doMaterial = null }: { spec: Spec | null; label: string; acabamento?: Acabamento }) {
+  const [escolhido, setEscolhido] = useState<Acabamento>(null);
+  // segue o material escolhido no painel; os botões do 3D trocam só a visualização
+  useEffect(() => setEscolhido(null), [doMaterial]);
+  const acabamento = escolhido ?? doMaterial ?? "branco";
+  const foldRef = useRef(1);
+  const vistaRef = useRef(VISTA0);
   const host = useRef<HTMLDivElement>(null);
   const engine = useRef<Engine | null>(null);
   const [fold, setFold] = useState(100);
@@ -95,7 +107,7 @@ export function Box3D({ spec, label, acabamento = null }: { spec: Spec | null; l
       }
       const camera = new THREE.PerspectiveCamera(35, 1, 1, raio * 20);
 
-      let atual = { fold: 1, yaw: VISTA0.yaw, pitch: VISTA0.pitch, zoom: 1 };
+      let atual = { fold: foldRef.current, ...vistaRef.current };
       const desenhar = () => {
         const w = el.clientWidth || 1;
         const h = el.clientHeight || 1;
@@ -122,10 +134,12 @@ export function Box3D({ spec, label, acabamento = null }: { spec: Spec | null; l
       ro.observe(el);
       engine.current = {
         setFold: (p) => {
+          foldRef.current = p;
           atual = { ...atual, fold: p };
           desenhar();
         },
         setView: (yaw, pitch, zoom) => {
+          vistaRef.current = { yaw, pitch, zoom };
           atual = { ...atual, yaw, pitch, zoom };
           desenhar();
         },
@@ -218,6 +232,22 @@ export function Box3D({ spec, label, acabamento = null }: { spec: Spec | null; l
           </div>
         )}
         {estado === "sem-modelo" && <div className="absolute inset-0 grid place-items-center text-sm text-text-muted">Visualização 3D ainda não disponível para este modelo.</div>}
+      </div>
+      <div role="radiogroup" aria-label="Acabamento da caixa" className="flex flex-wrap items-center gap-2 border-t border-border bg-surface px-3 py-2">
+        <span className="text-xs font-medium text-text-muted">Acabamento</span>
+        {ACABAMENTOS.map((a) => (
+          <button
+            key={a.value}
+            type="button"
+            role="radio"
+            aria-checked={acabamento === a.value}
+            onClick={() => setEscolhido(a.value)}
+            className={`flex h-control-sm items-center gap-1.5 rounded-full border px-3 text-xs font-medium ${acabamento === a.value ? "border-accent bg-accent-soft text-text" : "border-border text-text-muted hover:border-border-strong"}`}
+          >
+            <span aria-hidden className="size-3 rounded-full border border-border-strong" style={{ background: a.cor }} />
+            {a.label}
+          </button>
+        ))}
       </div>
       <div className="flex flex-wrap items-center gap-3 border-t border-border bg-surface px-3 py-2">
         <label htmlFor={sliderId} className="text-xs font-medium text-text-muted">

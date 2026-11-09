@@ -46,4 +46,6 @@ export type Spec = {
   espessura: number;
   sangria: boolean;
   areasCola: boolean;
+  /** Só para bandejas com parede inclinada (To Go): medidas internas na boca, em mm. */
+  topo?: { largura: number; profundidade: number; lingueta?: number };
 };

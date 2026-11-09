@@ -13,6 +13,11 @@
   "aberta": {
    "w": 259.0,
    "h": 367.8
+  },
+  "topo": {
+   "largura": 113.8,
+   "profundidade": 115.3,
+   "lingueta": 10.0
   }
  },
  {
@@ -29,6 +34,11 @@
   "aberta": {
    "w": 259.0,
    "h": 367.8
+  },
+  "topo": {
+   "largura": 113.8,
+   "profundidade": 115.3,
+   "lingueta": 10.0
   }
  },
  {
@@ -45,6 +55,11 @@
   "aberta": {
    "w": 217.1,
    "h": 322.7
+  },
+  "topo": {
+   "largura": 111.2,
+   "profundidade": 112.6,
+   "lingueta": 13.0
   }
  },
  {
@@ -61,6 +76,11 @@
   "aberta": {
    "w": 217.1,
    "h": 322.7
+  },
+  "topo": {
+   "largura": 111.2,
+   "profundidade": 112.6,
+   "lingueta": 13.0
   }
  },
  {
@@ -77,6 +97,11 @@
   "aberta": {
    "w": 324.0,
    "h": 401.1
+  },
+  "topo": {
+   "largura": 173.6,
+   "profundidade": 130.1,
+   "lingueta": 12.0
   }
  },
  {
@@ -93,6 +118,11 @@
   "aberta": {
    "w": 324.0,
    "h": 401.1
+  },
+  "topo": {
+   "largura": 173.6,
+   "profundidade": 130.1,
+   "lingueta": 12.0
   }
  },
  {
@@ -109,6 +139,11 @@
   "aberta": {
    "w": 277.1,
    "h": 352.7
+  },
+  "topo": {
+   "largura": 171.2,
+   "profundidade": 127.7,
+   "lingueta": 13.0
   }
  },
  {
@@ -125,6 +160,11 @@
   "aberta": {
    "w": 277.1,
    "h": 352.7
+  },
+  "topo": {
+   "largura": 171.2,
+   "profundidade": 127.7,
+   "lingueta": 13.0
   }
  },
  {
@@ -141,6 +181,11 @@
   "aberta": {
    "w": 369.0,
    "h": 471.6
+  },
+  "topo": {
+   "largura": 218.6,
+   "profundidade": 165.1,
+   "lingueta": 12.0
   }
  },
  {
@@ -157,6 +202,11 @@
   "aberta": {
    "w": 369.0,
    "h": 471.6
+  },
+  "topo": {
+   "largura": 218.6,
+   "profundidade": 165.1,
+   "lingueta": 12.0
   }
  },
  {
@@ -173,6 +223,11 @@
   "aberta": {
    "w": 315.0,
    "h": 408.6
+  },
+  "topo": {
+   "largura": 209.1,
+   "profundidade": 155.6,
+   "lingueta": 13.0
   }
  },
  {
@@ -189,6 +244,11 @@
   "aberta": {
    "w": 315.0,
    "h": 408.6
+  },
+  "topo": {
+   "largura": 209.1,
+   "profundidade": 155.6,
+   "lingueta": 13.0
   }
  },
  {
@@ -205,6 +265,11 @@
   "aberta": {
    "w": 450.0,
    "h": 484.6
+  },
+  "topo": {
+   "largura": 278.6,
+   "profundidade": 166.5,
+   "lingueta": 13.0
   }
  },
  {
@@ -221,6 +286,11 @@
   "aberta": {
    "w": 450.0,
    "h": 484.6
+  },
+  "topo": {
+   "largura": 278.6,
+   "profundidade": 166.5,
+   "lingueta": 13.0
   }
  },
  {
@@ -237,6 +307,11 @@
   "aberta": {
    "w": 376.0,
    "h": 441.1
+  },
+  "topo": {
+   "largura": 270.1,
+   "profundidade": 171.6,
+   "lingueta": 13.0
   }
  },
  {
@@ -253,6 +328,11 @@
   "aberta": {
    "w": 376.0,
    "h": 441.1
+  },
+  "topo": {
+   "largura": 270.1,
+   "profundidade": 171.6,
+   "lingueta": 13.0
   }
  }
 ]
