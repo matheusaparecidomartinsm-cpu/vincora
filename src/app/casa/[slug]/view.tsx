@@ -12,6 +12,7 @@ import { LINHAS } from "@/lib/dieline/models";
 import { toDXF } from "@/lib/dieline/render/dxf";
 import { toPDF } from "@/lib/dieline/render/pdf";
 import { toSVG } from "@/lib/dieline/render/svg";
+import type { FaceDobra } from "@/lib/dieline/fold3d-three";
 import type { Dieline } from "@/lib/dieline/types";
 import { mm, type FacaCasa } from "@/lib/facas-casa";
 
@@ -27,6 +28,7 @@ function baixar(data: BlobPart, tipo: string, nome: string) {
 export function FacaCasaView({ f }: { f: FacaCasa }) {
   const [dl, setDl] = useState<Dieline | null>(null);
   const [erro, setErro] = useState(false);
+  const [faces, setFaces] = useState<FaceDobra[] | null>(null);
   const [gerando, setGerando] = useState(false);
   const [materials, setMaterials] = useState<Material[]>([]);
   const [materialId, setMaterialId] = useState("");
@@ -47,6 +49,10 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then(setDl)
       .catch(() => setErro(true));
+    fetch(`/facas-casa/${f.slug}.3d.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setFaces)
+      .catch(() => setFaces(null));
   }, [f.slug]);
 
   const base = `faca-${f.slug}-${[f.produto, f.faca].filter(Boolean).join("-")}`;
@@ -141,6 +147,7 @@ export function FacaCasaView({ f }: { f: FacaCasa }) {
                   spec={{ model: f.slug, largura: f.largura, altura: f.altura, profundidade: f.profundidade, espessura: material?.espessuraMm ?? 0.4, sangria: false, areasCola: false, topo: f.topo }}
                   label={f.nome}
                   acabamento={acabamentoDoMaterial(material?.nome)}
+                  faces={faces}
                 />
               ),
             },

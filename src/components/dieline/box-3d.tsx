@@ -2,6 +2,7 @@
 import { Play, RotateCcw } from "lucide-react";
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent, type WheelEvent } from "react";
 import { foldDoModelo } from "@/lib/dieline/fold3d";
+import type { FaceDobra } from "@/lib/dieline/fold3d-three";
 import type { Spec } from "@/lib/dieline/types";
 
 type Engine = {
@@ -30,7 +31,7 @@ const ACABAMENTOS: { value: Exclude<Acabamento, null>; label: string; cor: strin
   { value: "ecokraft", label: "Ecokraft", cor: "#b98f5f" },
 ];
 
-export function Box3D({ spec, label, acabamento: doMaterial = null }: { spec: Spec | null; label: string; acabamento?: Acabamento }) {
+export function Box3D({ spec, label, acabamento: doMaterial = null, faces = null }: { spec: Spec | null; label: string; acabamento?: Acabamento; faces?: FaceDobra[] | null }) {
   const [escolhido, setEscolhido] = useState<Acabamento>(null);
   // segue o material escolhido no painel; os botões do 3D trocam só a visualização
   useEffect(() => setEscolhido(null), [doMaterial]);
@@ -51,14 +52,14 @@ export function Box3D({ spec, label, acabamento: doMaterial = null }: { spec: Sp
   useEffect(() => {
     if (!spec || !host.current) return;
     const fn = foldDoModelo(spec.model);
-    if (!fn) {
+    if (!fn && !faces) {
       setEstado("sem-modelo");
       return;
     }
     let cancelado = false;
     (async () => {
       const THREE = await import("three");
-      const { montar } = await import("@/lib/dieline/fold3d-three");
+      const { montar, montarFaces } = await import("@/lib/dieline/fold3d-three");
       if (cancelado || !host.current) return;
       let renderer: InstanceType<typeof THREE.WebGLRenderer>;
       try {
@@ -93,14 +94,14 @@ export function Box3D({ spec, label, acabamento: doMaterial = null }: { spec: Sp
         textura.colorSpace = THREE.SRGBColorSpace;
         papel.map = textura;
       }
-      const m = montar(fn(spec), { papel, borda });
+      const m = faces ? montarFaces(faces, { papel, borda }) : montar(fn!(spec), { papel, borda });
       const pivo = new THREE.Group();
       pivo.add(m.raiz);
       scene.add(pivo);
 
       // enquadra pelo maior tamanho entre "meio dobrada" e "fechada" (tampas abertas ocupam mais)
       let raio = 0;
-      for (const p of [0.5, 0.75, 1]) {
+      for (const p of [0, 0.5, 0.75, 1]) {
         m.aplicar(p);
         const tam = new THREE.Box3().setFromObject(m.raiz).getSize(new THREE.Vector3());
         raio = Math.max(raio, tam.length() / 2);
@@ -163,7 +164,7 @@ export function Box3D({ spec, label, acabamento: doMaterial = null }: { spec: Sp
     };
     // a cena depende só da spec
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [specKey, acabamento]);
+  }, [specKey, acabamento, faces]);
 
   useEffect(() => engine.current?.setFold(fold / 100), [fold, estado]);
   useEffect(() => engine.current?.setView(vista.yaw, vista.pitch, vista.zoom), [vista, estado]);
